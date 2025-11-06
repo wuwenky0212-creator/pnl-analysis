@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金融市场业务管理系统5.0 - 访问链接</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #262626;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #8c8c8c;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .link-section {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .link-label {
+            color: #595959;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .link-box {
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 6px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .link-url {
+            color: #1890ff;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            flex: 1;
+            word-break: break-all;
+        }
+        .copy-btn {
+            background: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+        .copy-btn:hover {
+            background: #40a9ff;
+        }
+        .copy-btn:active {
+            background: #096dd9;
+        }
+        .instructions {
+            background: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 16px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .instructions h3 {
+            color: #1890ff;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .instructions ul {
+            color: #595959;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        .status.online {
+            background: #f6ffed;
+            color: #52c41a;
+            border: 1px solid #b7eb8f;
+        }
+        .status.offline {
+            background: #fff2e8;
+            color: #fa8c16;
+            border: 1px solid #ffd591;
+        }
+        .note {
+            background: #fffbe6;
+            border: 1px solid #ffe58f;
+            border-radius: 4px;
+            padding: 12px;
+            margin-top: 20px;
+            color: #ad6800;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>金融市场业务管理系统5.0</h1>
+        <p class="subtitle">访问链接分享</p>
+        
+        <div class="link-section">
+            <div class="link-label">本地访问链接：</div>
+            <div class="link-box">
+                <span class="link-url" id="localLink">http://localhost:8083</span>
+                <button class="copy-btn" onclick="copyToClipboard('localLink')">复制</button>
+            </div>
+        </div>
+        
+        <div class="link-section">
+            <div class="link-label">局域网访问链接（其他设备）：</div>
+            <div class="link-box">
+                <span class="link-url" id="networkLink">http://192.168.96.161:8083</span>
+                <button class="copy-btn" onclick="copyToClipboard('networkLink')">复制</button>
+            </div>
+            <div style="margin-top: 10px; font-size: 12px; color: #8c8c8c;">
+                提示：同一网络下的其他设备可以使用此链接访问
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>使用说明：</h3>
+            <ul>
+                <li><strong>本地访问</strong>：在当前电脑上访问使用</li>
+                <li><strong>局域网访问</strong>：同一网络下的其他设备可以访问</li>
+                <li><strong>启动服务</strong>：
+                    <ul style="margin-top: 8px; padding-left: 20px;">
+                        <li>双击 <code>start_backend.bat</code> 启动后端服务</li>
+                        <li>双击 <code>start_frontend.bat</code> 启动前端服务</li>
+                    </ul>
+                </li>
+                <li>如果无法访问，请检查防火墙设置</li>
+                <li>确保端口 8083 和 8002 未被占用</li>
+            </ul>
+        </div>
+        
+        <div class="note">
+            <strong>注意：</strong>如果其他人需要访问，请确保他们在同一局域网内，或者使用内网穿透工具（如 ngrok、frp 等）。
+        </div>
+    </div>
+    
+    <script>
+        // 复制到剪贴板
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(function() {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '已复制!';
+                btn.style.background = '#52c41a';
+                
+                setTimeout(function() {
+                    btn.textContent = originalText;
+                    btn.style.background = '#1890ff';
+                }, 2000);
+            }).catch(function(err) {
+                alert('复制失败，请手动复制：' + text);
+            });
+        }
+        
+    </script>
+</body>
+</html>
+

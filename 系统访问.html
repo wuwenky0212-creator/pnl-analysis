@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金融市场业务管理系统5.0 - 系统访问</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 50px;
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #262626;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .subtitle {
+            color: #8c8c8c;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+        .access-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .access-btn {
+            display: block;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .access-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        .access-btn:active {
+            transform: translateY(0);
+        }
+        .access-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .access-btn:hover::before {
+            left: 100%;
+        }
+        .access-btn.local {
+            background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+            box-shadow: 0 4px 15px rgba(24, 144, 255, 0.4);
+        }
+        .access-btn.local:hover {
+            box-shadow: 0 6px 20px rgba(24, 144, 255, 0.5);
+        }
+        .link-section {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .link-label {
+            color: #595959;
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .link-box {
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 6px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .link-url {
+            color: #1890ff;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            flex: 1;
+            word-break: break-all;
+            margin-right: 10px;
+        }
+        .copy-btn {
+            background: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+            white-space: nowrap;
+        }
+        .copy-btn:hover {
+            background: #40a9ff;
+        }
+        .copy-btn.copied {
+            background: #52c41a;
+        }
+        .status-info {
+            background: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 16px;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .status-info h3 {
+            color: #1890ff;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .status-info ul {
+            color: #595959;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+        .status-info li {
+            margin-bottom: 8px;
+        }
+        .note {
+            background: #fffbe6;
+            border: 1px solid #ffe58f;
+            border-radius: 4px;
+            padding: 16px;
+            margin-top: 20px;
+            color: #ad6800;
+            font-size: 14px;
+            text-align: left;
+        }
+        .icon {
+            font-size: 24px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 金融市场业务管理系统5.0</h1>
+        <p class="subtitle">点击下方按钮直接访问系统</p>
+        
+        <div class="access-buttons">
+            <a href="http://localhost:8083" target="_blank" class="access-btn local">
+                <span class="icon">🖥️</span>
+                本地访问系统
+            </a>
+            <a href="http://192.168.96.161:8083" target="_blank" class="access-btn">
+                <span class="icon">🌐</span>
+                局域网访问系统
+            </a>
+        </div>
+        
+        <div class="link-section">
+            <div class="link-label">📍 访问链接（可复制分享）：</div>
+            <div class="link-box">
+                <span class="link-url" id="localLink">http://localhost:8083</span>
+                <button class="copy-btn" onclick="copyToClipboard('localLink', this)">复制</button>
+            </div>
+            <div class="link-box" style="margin-top: 10px;">
+                <span class="link-url" id="networkLink">http://192.168.96.161:8083</span>
+                <button class="copy-btn" onclick="copyToClipboard('networkLink', this)">复制</button>
+            </div>
+        </div>
+        
+        <div class="status-info">
+            <h3>📋 使用说明</h3>
+            <ul>
+                <li><strong>本地访问</strong>：在当前电脑上直接使用</li>
+                <li><strong>局域网访问</strong>：同一网络下的手机、平板、其他电脑可以访问</li>
+                <li><strong>启动服务</strong>：确保已运行 <code>start_backend.bat</code> 和 <code>start_frontend.bat</code></li>
+                <li><strong>无法访问</strong>：检查防火墙设置，确保端口 8083 和 8002 未被阻止</li>
+            </ul>
+        </div>
+        
+        <div class="note">
+            <strong>💡 提示：</strong>
+            <ul style="margin-top: 8px; padding-left: 20px;">
+                <li>如果其他人需要访问，请确保他们在同一局域网内</li>
+                <li>IP地址（192.168.96.161）可能因网络环境变化，请查看实际IP</li>
+                <li>如需外网访问，可使用内网穿透工具（如 ngrok、frp 等）</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // 复制到剪贴板
+        function copyToClipboard(elementId, button) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(function() {
+                const originalText = button.textContent;
+                button.textContent = '已复制!';
+                button.classList.add('copied');
+                
+                setTimeout(function() {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                // 备用方案：使用传统方法
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    button.textContent = '已复制!';
+                    button.classList.add('copied');
+                    setTimeout(function() {
+                        button.textContent = '复制';
+                        button.classList.remove('copied');
+                    }, 2000);
+                } catch (err) {
+                    alert('复制失败，请手动复制：' + text);
+                }
+                document.body.removeChild(textArea);
+            });
+        }
+        
+        // 检查服务状态
+        async function checkServiceStatus() {
+            try {
+                const response = await fetch('http://localhost:8083', { method: 'HEAD', mode: 'no-cors' });
+                console.log('前端服务运行正常');
+            } catch (e) {
+                console.log('无法连接到前端服务，请确保服务已启动');
+            }
+        }
+        
+        // 页面加载时检查服务
+        window.onload = function() {
+            checkServiceStatus();
+        };
+    </script>
+</body>
+</html>
+
+
+

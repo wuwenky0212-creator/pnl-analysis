@@ -1,0 +1,55 @@
+==========================================
+  Railway部署 - 直接执行的命令
+==========================================
+
+📍 执行位置：在项目目录 d:\workspace\损益归因分析
+
+📋 第一步：准备GitHub仓库
+
+1. 先在GitHub创建仓库：
+   - 访问：https://github.com/new
+   - 仓库名：pnl-analysis（或损益归因分析）
+   - 选择Public
+   - 点击Create repository
+
+2. 在PowerShell中执行（在项目目录）：
+
+git init
+git add .
+git commit -m "准备部署到Railway"
+git remote add origin https://github.com/wuwenky0212-creator/pnl-analysis.git
+git branch -M main
+git push -u origin main
+
+如果提示需要登录，使用GitHub账号和Personal Access Token
+
+📋 第二步：部署到Railway
+
+1. 访问：https://railway.app
+2. 使用GitHub账号登录
+3. 点击 "New Project" > "Deploy from GitHub repo"
+4. 选择你的仓库
+5. 等待部署完成
+6. 配置环境变量（见下方）
+7. 生成域名，获取后端URL
+
+环境变量：
+PORT=8002
+HOST=0.0.0.0
+DEBUG=False
+DATA_FORMAT=mock
+DEFAULT_CURRENCY=CNY
+DEFAULT_UNIT=万元
+
+📋 第三步：配置前端
+
+在 frontend/index.html 中添加：
+<meta name="backend-url" content="https://你的后端URL.railway.app">
+
+然后提交：
+git add frontend/index.html
+git commit -m "配置后端API"
+git push
+
+完成！
+

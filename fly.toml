@@ -1,0 +1,36 @@
+# Fly.io 部署配置
+# 使用: fly launch
+
+app = "fx-attribution"
+primary_region = "iad"  # 可选: hkg, nrt, ord 等
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8002"
+  HOST = "0.0.0.0"
+  DEBUG = "False"
+  DATA_FORMAT = "mock"
+
+[http_service]
+  internal_port = 8002
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8002
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+

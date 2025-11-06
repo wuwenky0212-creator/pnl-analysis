@@ -1,0 +1,29 @@
+services:
+  # 后端服务
+  - type: web
+    name: fx-attribution-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8002
+      - key: HOST
+        value: 0.0.0.0
+      - key: DEBUG
+        value: "False"
+      - key: DATA_FORMAT
+        value: mock
+    healthCheckPath: /health
+    plan: free  # 或 starter ($7/月)
+
+  # 前端静态站点
+  - type: web
+    name: fx-attribution-frontend
+    env: static
+    staticPublishPath: ./frontend
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://fx-attribution-backend.onrender.com/api/*
+    plan: free
+

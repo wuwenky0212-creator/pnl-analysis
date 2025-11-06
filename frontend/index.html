@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>当前损益分析系统</title>
+    <!-- 后端API地址配置（Railway等平台部署时使用） -->
+    <!-- 部署时，将下面的URL替换为你的实际后端URL -->
+    <!-- <meta name="backend-url" content="https://your-backend.railway.app"> -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.0/index.min.js"></script>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="top-navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <span class="logo-text">金融市场业务管理系统5.0</span>
+            </div>
+        </div>
+        <div class="nav-center">
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">首页</a>
+                <a href="#" class="nav-item">交易簿记</a>
+                <a href="#" class="nav-item">持仓管理</a>
+                <a href="#" class="nav-item">业务管理</a>
+                <a href="#" class="nav-item">限额管理</a>
+                <a href="#" class="nav-item">查询管理</a>
+                <a href="#" class="nav-item">基础数据</a>
+            </nav>
+        </div>
+        <div class="nav-right">
+            <div class="nav-icon">🔔</div>
+            <div class="nav-icon">⚙️</div>
+            <div class="nav-user">admin ▼</div>
+        </div>
+        </header>
+
+    <div class="dashboard-container">
+        <!-- 左侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-item active" id="currentPnlMenuItem">
+                <span>当前损益分析</span>
+                <span class="sidebar-icon">+</span>
+            </div>
+            <div class="sidebar-item" id="fxPnlMenuItem">
+                <span>外汇类损益归因分析</span>
+                <span class="sidebar-icon">+</span>
+            </div>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 当前损益分析界面 -->
+            <div id="currentPnlView" class="content-view active">
+
+            <!-- 配置面板 Widget -->
+            <div class="widget config-widget">
+                <div class="widget-content">
+            <div class="config-row">
+                <div class="config-group">
+                    <label for="startDate">开始日期</label>
+                    <input type="date" id="startDate" value="2025-11-01">
+                </div>
+                <div class="config-group">
+                    <label for="endDate">结束日期</label>
+                    <input type="date" id="endDate" value="">
+                </div>
+                <div class="config-group">
+                    <label for="portfolioSelect">投资组合</label>
+                            <select id="portfolioSelect">
+                                <option value="">请选择</option>
+                                <option value="all">全机构</option>
+                                <option value="fx_spot">外汇即期投组</option>
+                                <option value="derivative">衍生品投组</option>
+                                <option value="ir">利率投组</option>
+                                <option value="option">期权投组</option>
+                    </select>
+                </div>
+                <div class="config-group">
+                    <label for="productSelect">产品</label>
+                            <select id="productSelect">
+                                <option value="">请选择</option>
+                                <option value="FXSPOT">外汇即期</option>
+                                <option value="FWD">外汇远期</option>
+                                <option value="FXSW">外汇掉期</option>
+                                <option value="FXOPT">外汇期权</option>
+                                <option value="CCS">CCS</option>
+                                <option value="IRS">IRS</option>
+                    </select>
+                </div>
+            </div>
+            <div class="config-actions">
+                <button id="queryBtn" class="btn btn-primary">查询</button>
+                <button id="resetBtn" class="btn btn-secondary">重置</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 核心指标卡片 Widgets - 横向分布 -->
+            <div class="widgets-grid">
+                <!-- 累计损益总额 - 突出显示 -->
+                <div class="widget metric-widget metric-widget-primary">
+                    <div class="widget-header">
+                        <h3 class="widget-title">累计损益总额</h3>
+                    </div>
+                    <div class="widget-content">
+                        <div class="metric-main">
+                            <div class="metric-value" id="totalPnl">--</div>
+                            <div class="metric-unit">万元</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 利息损益 -->
+                <div class="widget metric-widget">
+                    <div class="widget-header">
+                        <h3 class="widget-title">利息损益</h3>
+                    </div>
+                    <div class="widget-content">
+                        <div class="metric-main">
+                            <div class="metric-value" id="interestPnl">--</div>
+                            <div class="metric-unit">万元</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 估值损益 -->
+                <div class="widget metric-widget">
+                    <div class="widget-header">
+                        <h3 class="widget-title">估值损益</h3>
+                    </div>
+                    <div class="widget-content">
+                        <div class="metric-main">
+                            <div class="metric-value" id="valuationPnl">--</div>
+                            <div class="metric-unit">万元</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 价差损益 -->
+                <div class="widget metric-widget">
+                    <div class="widget-header">
+                        <h3 class="widget-title">价差损益</h3>
+                    </div>
+                    <div class="widget-content">
+                        <div class="metric-main">
+                            <div class="metric-value" id="priceDiffPnl">--</div>
+                            <div class="metric-unit">万元</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 累计损益趋势图 -->
+            <div class="widget chart-widget full-width">
+                <div class="widget-header">
+                    <h3 class="widget-title">累计损益趋势</h3>
+                    <div class="widget-time">19:38:53</div>
+                </div>
+                <div class="widget-content">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                </div>
+
+            <!-- 警告提示 Widget -->
+            <div id="warningsSection" class="widget warning-widget" style="display: none;">
+                <div class="widget-header">
+                    <h3 class="widget-title">数据警告</h3>
+            </div>
+                <div class="widget-content">
+                    <ul id="warningsList"></ul>
+                </div>
+            </div>
+
+            <!-- 详细数据 TAB Widget -->
+            <div class="widget table-widget">
+                <div class="widget-content" style="padding: 16px;">
+                    <!-- TAB 导航 -->
+                    <div class="tab-nav">
+                        <button class="tab-button active" data-tab="tab1">按投组维度</button>
+                        <button class="tab-button" data-tab="tab2">按产品分类</button>
+                        <button class="tab-button" data-tab="tab3">按损益分项</button>
+                    </div>
+                    
+                    <!-- Tab1: 按投组维度表格 -->
+                    <div id="tab1" class="tab-content active">
+            <div class="table-container">
+                            <table id="portfolioTable">
+                    <thead>
+                        <tr>
+                                        <th>投组</th>
+                            <th>利息损益</th>
+                            <th>价差损益</th>
+                            <th>估值损益</th>
+                            <th>融资成本</th>
+                            <th>手续费</th>
+                            <th>总计</th>
+                            <th>占比</th>
+                                        <th>操作</th>
+                        </tr>
+                    </thead>
+                                <tbody id="portfolioTableBody">
+                        <tr>
+                            <td colspan="9" class="empty-state">请点击查询按钮加载数据</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                    </div>
+                    
+                    <!-- Tab2: 按产品分类饼图+表格 -->
+                    <div id="tab2" class="tab-content">
+                        <div class="product-chart-layout">
+                            <!-- 左侧：饼图 -->
+                            <div class="product-chart-left">
+                                <canvas id="productPieChart"></canvas>
+                            </div>
+                            <!-- 右侧：表格 -->
+                            <div class="product-chart-right">
+                                <div class="table-container">
+                                    <table id="productTable">
+                                        <thead>
+                                            <tr>
+                                                <th>产品</th>
+                                                <th>损益（万元）</th>
+                                                <th>占比</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="productTableBody">
+                                            <tr>
+                                                <td colspan="4" class="empty-state">请点击查询按钮加载数据</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab3: 按损益分项柱状图 -->
+                    <div id="tab3" class="tab-content">
+                        <div class="chart-container">
+                            <canvas id="componentBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 交易明细模态框 -->
+            <div id="transactionDetailModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>交易明细</h3>
+                        <button class="modal-close" id="closeModal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="transactionDetailContent">
+                            <p>加载中...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- 外汇类损益归因分析界面 -->
+            <div id="fxPnlView" class="content-view" style="display: none;">
+                <!-- 配置面板 Widget -->
+                <div class="widget config-widget">
+                    <div class="widget-content">
+                        <div class="config-row">
+                            <div class="config-group">
+                                <label for="fxStartDate">开始日期</label>
+                                <input type="date" id="fxStartDate" value="2025-11-01">
+                            </div>
+                            <div class="config-group">
+                                <label for="fxEndDate">结束日期</label>
+                                <input type="date" id="fxEndDate" value="">
+                            </div>
+                            <div class="config-group">
+                                <label for="fxPortfolioSelect">投资组合</label>
+                                <select id="fxPortfolioSelect">
+                                    <option value="">请选择</option>
+                                    <option value="all">全机构</option>
+                                    <option value="fx_spot">外汇即期投组</option>
+                                    <option value="derivative">衍生品投组</option>
+                                    <option value="ir">利率投组</option>
+                                    <option value="option">期权投组</option>
+                                </select>
+                            </div>
+                            <div class="config-group">
+                                <label for="fxProductSelect">产品</label>
+                                <select id="fxProductSelect">
+                                    <option value="">请选择</option>
+                                    <option value="FXSPOT">外汇即期</option>
+                                    <option value="FWD">外汇远期</option>
+                                    <option value="FXSW">外汇掉期</option>
+                                    <option value="FXOPT">外汇期权</option>
+                                    <option value="CCS">CCS</option>
+                                    <option value="IRS">IRS</option>
+                                </select>
+                            </div>
+                            <div class="config-group">
+                                <label for="fxCurrencyPairSelect">标的</label>
+                                <select id="fxCurrencyPairSelect">
+                                    <option value="">请选择</option>
+                                    <option value="USDCNY">USDCNY</option>
+                                    <option value="EURCNY">EURCNY</option>
+                                    <option value="GBPCNY">GBPCNY</option>
+                                    <option value="JPYCNY">JPYCNY</option>
+                                    <option value="HKDCNY">HKDCNY</option>
+                                    <option value="AUDCNY">AUDCNY</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="config-actions">
+                            <button id="fxQueryBtn" class="btn btn-primary">查询</button>
+                            <button id="fxResetBtn" class="btn btn-secondary">重置</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 累计估值损益和趋势图 -->
+                <div class="widget chart-widget">
+                    <div class="widget-header">
+                        <h3 class="widget-title">累计估值损益</h3>
+                        <div class="widget-header-right">
+                            <div class="metric-display-inline">
+                                <span class="metric-value-inline" id="fxValuationPnl">--</span>
+                                <span class="metric-unit-inline">万元</span>
+                            </div>
+                            <div class="widget-time">19:38:53</div>
+                        </div>
+                    </div>
+                    <div class="widget-content">
+                        <canvas id="fxTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- 警告提示 Widget -->
+                <div id="fxWarningsSection" class="widget warning-widget" style="display: none;">
+                    <div class="widget-header">
+                        <h3 class="widget-title">数据警告</h3>
+                    </div>
+                    <div class="widget-content">
+                        <ul id="fxWarningsList"></ul>
+                    </div>
+                </div>
+
+                <!-- 归因明细 TAB Widget -->
+                <div class="widget table-widget">
+                    <div class="widget-content" style="padding: 16px;">
+                        <!-- TAB 导航 -->
+                        <div class="tab-nav">
+                            <button class="tab-button active" data-tab="fxTab1">归因明细</button>
+                            <button class="tab-button" data-tab="fxTab2">按投组</button>
+                            <button class="tab-button" data-tab="fxTab3">按资产标的</button>
+                        </div>
+                        
+                        <!-- Tab1: 归因明细 - 按投组维度展示归因结果 -->
+                        <div id="fxTab1" class="tab-content active">
+                            <div class="table-container">
+                                <table id="fxAttributionTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Folder</th>
+                                            <th>总敞口</th>
+                                            <th>估值损益</th>
+                                            <th>Delta</th>
+                                            <th>Vega</th>
+                                            <th>Gamma</th>
+                                            <th>Theta</th>
+                                            <th>Rho</th>
+                                            <th>Vanna</th>
+                                            <th>Charm</th>
+                                            <th>Veta</th>
+                                            <th>Vomma</th>
+                                            <th>Speed</th>
+                                            <th>ThetaDecay</th>
+                                            <th>无法解释部分</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="fxAttributionTableBody">
+                                        <tr>
+                                            <td colspan="16" class="empty-state">请点击查询按钮加载数据</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Tab2: 按投组 - 展示敏感值 -->
+                        <div id="fxTab2" class="tab-content">
+                            <div class="table-container">
+                                <table id="fxPortfolioSensitivityTable">
+                                    <thead>
+                                        <tr>
+                                            <th>投组</th>
+                                            <th>总敞口</th>
+                                            <th>Delta</th>
+                                            <th>Vega</th>
+                                            <th>Gamma</th>
+                                            <th>Theta</th>
+                                            <th>Rho</th>
+                                            <th>Vanna</th>
+                                            <th>Charm</th>
+                                            <th>Veta</th>
+                                            <th>Vomma</th>
+                                            <th>Speed</th>
+                                            <th>ThetaDecay</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="fxPortfolioSensitivityTableBody">
+                                        <tr>
+                                            <td colspan="14" class="empty-state">请点击查询按钮加载数据</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Tab3: 按资产标的 - 按货币对展示 -->
+                        <div id="fxTab3" class="tab-content">
+                            <div class="table-container">
+                                <table id="fxAssetTargetTable">
+                                    <thead>
+                                        <tr>
+                                            <th>货币对</th>
+                                            <th>估值损益</th>
+                                            <th>Delta</th>
+                                            <th>Vega</th>
+                                            <th>Gamma</th>
+                                            <th>Theta</th>
+                                            <th>Rho</th>
+                                            <th>Vanna</th>
+                                            <th>Charm</th>
+                                            <th>Veta</th>
+                                            <th>Vomma</th>
+                                            <th>Speed</th>
+                                            <th>ThetaDecay</th>
+                                            <th>无法解释部分</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="fxAssetTargetTableBody">
+                                        <tr>
+                                            <td colspan="15" class="empty-state">请点击查询按钮加载数据</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 交易明细弹窗 -->
+    <div id="fxDrilldownModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 1400px;">
+            <div class="modal-header">
+                <h3 class="modal-title">交易明细</h3>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="table-container" style="max-height: 600px; overflow-y: auto;">
+                    <table id="fxTransactionDetailTable">
+                        <thead>
+                            <tr>
+                                <th>交易编号</th>
+                                <th>交易日期</th>
+                                <th>产品代码</th>
+                                <th>产品名称</th>
+                                <th>货币对</th>
+                                <th>交易方向</th>
+                                <th>名义金额（万元）</th>
+                                <th>价格</th>
+                                <th>估值损益（万元）</th>
+                                <th>投组</th>
+                                <th>Delta</th>
+                                <th>Vega</th>
+                                <th>Gamma</th>
+                                <th>Theta</th>
+                                <th>Rho</th>
+                                <th>Vanna</th>
+                                <th>Charm</th>
+                                <th>Veta</th>
+                                <th>Vomma</th>
+                                <th>Speed</th>
+                                <th>ThetaDecay</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fxTransactionDetailBody">
+                            <tr>
+                                <td colspan="21" class="empty-state">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 贡献度弹窗 -->
+    <div id="fxContributionModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 1000px;">
+            <div class="modal-header">
+                <h3 class="modal-title">贡献度分析</h3>
+                <span class="modal-close" id="fxContributionClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="fxContributionContent">
+                    <p style="padding: 20px; color: var(--text-secondary);">加载中...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 产品归因贡献弹窗 -->
+    <div id="fxProductAttributionModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h3 class="modal-title">归因贡献度</h3>
+                <span class="modal-close" id="fxProductAttributionModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 16px;">
+                    <h4 id="fxProductAttributionProductName" style="color: var(--text-primary); font-size: 16px; margin: 0;"></h4>
+                </div>
+                <div class="table-container" style="max-height: 500px; overflow-y: auto;">
+                    <table id="fxProductAttributionTable">
+                        <thead>
+                            <tr>
+                                <th>归因分项</th>
+                                <th>贡献度（万元）</th>
+                                <th>占比</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fxProductAttributionBody">
+                            <tr>
+                                <td colspan="3" class="empty-state">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 归因分项趋势图弹窗 -->
+    <div id="fxTrendChartModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 1200px;">
+            <div class="modal-header">
+                <h3 class="modal-title">归因分项趋势图</h3>
+                <span class="modal-close" id="fxTrendChartModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div style="height: 500px;">
+                    <canvas id="fxFactorTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/fx-attribution.js"></script>
+    <script src="js/fx-charts.js"></script>
+    <script src="js/fx-export.js"></script>
+    <script src="js/fx-drilldown.js"></script>
+    <script src="js/fx-contribution.js"></script>
+    <script src="js/fx-trend-chart.js"></script>
+</body>
+</html>
+
+
+
+
+
