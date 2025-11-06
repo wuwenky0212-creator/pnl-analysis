@@ -13,6 +13,7 @@ ENV PYTHONUNBUFFERED=1 \
 # 安装系统依赖
 RUN apt-get update && apt-get install -y \
     gcc \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制依赖文件
@@ -31,9 +32,10 @@ WORKDIR /app
 # 暴露端口
 EXPOSE 8002
 
-# 健康检查（使用环境变量PORT，如果未设置则使用8002）
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import urllib.request, os; port = os.getenv('PORT', '8002'); urllib.request.urlopen(f'http://localhost:{port}/api/portfolios').read()" || exit 1
+# 健康检查（使用/health端点，更可靠）
+# Railway使用自己的健康检查，但保留Docker健康检查作为备用
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-8002}/health || exit 1
 
 # 复制启动脚本
 COPY start.sh /app/start.sh
