@@ -177,18 +177,17 @@ async def calculate_fx_attribution(request: FXAttributionRequest):
         
         # 根据分组维度生成数据
         if request.group_by == "portfolio":
-            # 按Folder分组，使用Folder名称
-            # 定义标准Folder列表
-            standard_folders = [
-                "BNTCBDEPO",
-                "BNTFIDEPO",
-                "BNBCMBOND",
-                "BNBMMFXSWP",
-                "BNBMMINTBK",
-                "BNMMINTBKE"
+            # 按账户分组，使用账户名称
+            # 定义标准账户列表
+            standard_accounts = [
+                "外汇即期自营户",
+                "外汇即期内部报价户",
+                "外汇远期自营户",
+                "外汇远期内部报价户",
+                "外汇掉期自营户"
             ]
             
-            for folder_name in standard_folders:
+            for folder_name in standard_accounts:
                 valuation_pnl = random.uniform(-100, 100)
                 total_pnl += valuation_pnl
                 
@@ -455,8 +454,15 @@ async def get_fx_transaction_details(request: FXTransactionDetailRequest):
             price = random.uniform(6.5, 7.5)  # 汇率价格
             valuation_pnl = random.uniform(-100, 100)  # 估值损益
             
-            # 投组名称
-            portfolio_name = request.dimension_value if request.dimension_type == 'portfolio' else '全机构'
+            # 账户名称 - 从标准账户列表中随机选择
+            account_names = [
+                '外汇即期自营户',
+                '外汇即期内部报价户',
+                '外汇远期自营户',
+                '外汇远期内部报价户',
+                '外汇掉期自营户'
+            ]
+            portfolio_name = random.choice(account_names)
             
             # 生成敏感性指标（模拟数据）- 更新为新的8个因子
             delta = random.uniform(-1000, 1000)

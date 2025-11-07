@@ -295,52 +295,42 @@ function updateFXMetrics(data) {
     }
 }
 
-// Folder名称映射（归因明细使用）
-const fxFolderNameMap = {
-    'BNTCBDEPO': 'BNTCBDEPO',
-    'BNTFIDEPO': 'BNTFIDEPO',
-    'BNBCMBOND': 'BNBCMBOND',
-    'BNBMMFXSWP': 'BNBMMFXSWP',
-    'BNBMMINTBK': 'BNBMMINTBK',
-    'BNMMINTBKE': 'BNMMINTBKE'
+// 账户名称映射（归因明细使用）
+const fxAccountNameMap = {
+    '外汇即期自营户': '外汇即期自营户',
+    '外汇即期内部报价户': '外汇即期内部报价户',
+    '外汇远期自营户': '外汇远期自营户',
+    '外汇远期内部报价户': '外汇远期内部报价户',
+    '外汇掉期自营户': '外汇掉期自营户'
 };
 
-// 映射Folder显示名称（用于归因明细）
-function mapFXFolderName(dimensionValue) {
+// 映射账户显示名称（用于归因明细）
+function mapFXAccountName(dimensionValue) {
     if (!dimensionValue) return '未知';
     
-    // 标准化处理：去除空格，转换为大写
-    const value = dimensionValue.trim().toUpperCase();
+    // 标准化处理：去除空格
+    const value = dimensionValue.trim();
     
-    // 尝试直接匹配（不区分大小写）
-    if (fxFolderNameMap[value]) {
-        return fxFolderNameMap[value];
+    // 尝试直接匹配
+    if (fxAccountNameMap[value]) {
+        return fxAccountNameMap[value];
     }
     
-    // 如果已经是标准Folder名称（原始大小写），直接返回
-    if (fxFolderNameMap[dimensionValue.trim()]) {
-        return fxFolderNameMap[dimensionValue.trim()];
+    // 如果包含关键词，尝试匹配
+    if (value.includes('即期') && value.includes('自营')) {
+        return '外汇即期自营户';
+    } else if (value.includes('即期') && value.includes('内部')) {
+        return '外汇即期内部报价户';
+    } else if (value.includes('远期') && value.includes('自营')) {
+        return '外汇远期自营户';
+    } else if (value.includes('远期') && value.includes('内部')) {
+        return '外汇远期内部报价户';
+    } else if (value.includes('掉期') && value.includes('自营')) {
+        return '外汇掉期自营户';
     }
     
-    // 尝试匹配（不区分大小写）
-    for (const [key, mappedValue] of Object.entries(fxFolderNameMap)) {
-        if (value === key.toUpperCase()) {
-            return mappedValue;
-        }
-    }
-    
-    // 如果包含Folder名称的一部分，尝试匹配
-    const folderNames = Object.keys(fxFolderNameMap);
-    for (const folderName of folderNames) {
-        const folderUpper = folderName.toUpperCase();
-        if (value === folderUpper || value.includes(folderUpper) || folderUpper.includes(value)) {
-            return fxFolderNameMap[folderName];
-        }
-    }
-    
-    // 如果后端返回的就是Folder名称，直接返回（标准化为大写）
-    // 这样可以确保后端返回的Folder名称能正确显示
-    return dimensionValue.trim().toUpperCase();
+    // 默认返回原始值
+    return dimensionValue.trim();
 }
 
 // 投组名称映射（保留用于其他地方）
@@ -419,10 +409,10 @@ function updateFXAttributionTable(details) {
         return;
     }
     
-    // 按Folder名称去重并汇总
+    // 按账户名称去重并汇总
     const portfolioMap = new Map();
     details.forEach(detail => {
-        const folderName = mapFXFolderName(detail.dimension_value);
+        const folderName = mapFXAccountName(detail.dimension_value);
         
         if (!portfolioMap.has(folderName)) {
             portfolioMap.set(folderName, {
