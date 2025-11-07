@@ -882,9 +882,8 @@ function createFXAttributionTableRow(detail) {
         });
     }
     
-    // 因子代码映射
-    const factorCodes = ['delta', 'vega', 'gamma', 'theta', 'rho', 'vanna', 
-                       'charm', 'veta', 'vomma', 'speed', 'theta_decay'];
+    // 因子代码映射 - 调整为新的因子列表
+    const factorCodes = ['delta', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna'];
     
     const dimensionValue = detail.dimension_value || '';
     const totalExposure = detail.total_exposure || 0;
@@ -900,12 +899,14 @@ function createFXAttributionTableRow(detail) {
         }).join('')}
         <td class="${getNumberClass(detail.unexplained)}">${formatNumber(detail.unexplained)}</td>
         <td>
-            <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")' style="margin-right: 8px;">
-                查看明细
-            </button>
-            <button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
-                查看趋势图
-            </button>
+            <div style="display: flex; gap: 8px; justify-content: center;">
+                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
+                    查看明细
+                </button>
+                <button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
+                    查看趋势图
+                </button>
+            </div>
         </td>
     `;
     
@@ -930,9 +931,8 @@ function createFXSensitivityTableRow(detail) {
         });
     }
     
-    // 因子代码映射
-    const factorCodes = ['delta', 'vega', 'gamma', 'theta', 'rho', 'vanna', 
-                       'charm', 'veta', 'vomma', 'speed', 'theta_decay'];
+    // 因子代码映射 - 调整为新的因子列表
+    const factorCodes = ['delta', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna'];
     
     const dimensionValue = detail.dimension_value || '';
     const totalExposure = detail.total_exposure || 0;
@@ -946,12 +946,14 @@ function createFXSensitivityTableRow(detail) {
             return `<td class="${getNumberClass(value)}">${formatNumber(value)}</td>`;
         }).join('')}
         <td>
-            <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")' style="margin-right: 8px;">
-                交易明细
-            </button>
-            <button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}")'>
-                贡献度
-            </button>
+            <div style="display: flex; gap: 8px; justify-content: center;">
+                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
+                    交易明细
+                </button>
+                <button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}")'>
+                    贡献度
+                </button>
+            </div>
         </td>
     `;
     
@@ -979,9 +981,8 @@ function createFXTableRow(detail, dimensionType) {
         });
     }
     
-    // 因子代码映射
-    const factorCodes = ['delta', 'vega', 'gamma', 'theta', 'rho', 'vanna', 
-                       'charm', 'veta', 'vomma', 'speed', 'theta_decay'];
+    // 因子代码映射 - 调整为新的因子列表
+    const factorCodes = ['delta', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna'];
     
     const dimensionValue = detail.dimension_value || '';
     
@@ -995,13 +996,15 @@ function createFXTableRow(detail, dimensionType) {
         }).join('')}
         <td class="${getNumberClass(detail.unexplained)}">${formatNumber(detail.unexplained)}</td>
         <td>
-            <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")' style="margin-right: 8px;">
-                查看明细
-            </button>
-            ${dimensionType === 'currency_pair' 
-                ? `<button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}", "currency_pair")'>贡献度</button>`
-                : `<button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>查看趋势图</button>`
-            }
+            <div style="display: flex; gap: 8px; justify-content: center;">
+                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>
+                    查看明细
+                </button>
+                ${dimensionType === 'currency_pair' 
+                    ? `<button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}", "currency_pair")'>贡献度</button>`
+                    : `<button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>查看趋势图</button>`
+                }
+            </div>
         </td>
     `;
     
@@ -1154,16 +1157,13 @@ function showFXProductAttribution(productName) {
     // 因子名称映射
     const factorNameMap = {
         'delta': 'Delta',
-        'vega': 'Vega',
         'gamma': 'Gamma',
+        'vega': 'Vega',
         'theta': 'Theta',
         'rho': 'Rho',
-        'vanna': 'Vanna',
-        'charm': 'Charm',
-        'veta': 'Veta',
-        'vomma': 'Vomma',
-        'speed': 'Speed',
-        'theta_decay': 'ThetaDecay'
+        'phi': 'Phi',
+        'volga': 'Volga',
+        'vanna': 'Vanna'
     };
     
     // 创建数据数组

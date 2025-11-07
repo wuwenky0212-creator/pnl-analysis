@@ -797,21 +797,21 @@ table {
 thead th {
     background: #fafafa;
     color: var(--text-primary);
-    padding: 14px 16px;
+    padding: 10px 12px;
     text-align: left;
     font-weight: 700;
     border-bottom: 2px solid var(--border-color);
     white-space: nowrap;
-    font-size: 14px;
-    letter-spacing: 0.4px;
+    font-size: 13px;
+    letter-spacing: 0.3px;
 }
 
 tbody td {
-    padding: 14px 16px;
+    padding: 10px 12px;
     border-bottom: 1px solid var(--border-color);
     color: var(--text-secondary);
     transition: all 0.2s ease;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 400;
 }
 

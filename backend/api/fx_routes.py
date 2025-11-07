@@ -195,20 +195,17 @@ async def calculate_fx_attribution(request: FXAttributionRequest):
                 valuation_pnl = random.uniform(-100, 100)
                 total_pnl += valuation_pnl
                 
-                # 生成11个因子
+                # 生成8个因子
                 factors = []
                 factor_names = [
                     ("delta", "Delta"),
-                    ("vega", "Vega"),
                     ("gamma", "Gamma"),
+                    ("vega", "Vega"),
                     ("theta", "Theta"),
                     ("rho", "Rho"),
-                    ("vanna", "Vanna"),
-                    ("charm", "Charm"),
-                    ("veta", "Veta"),
-                    ("vomma", "Vomma"),
-                    ("speed", "Speed"),
-                    ("theta_decay", "ThetaDecay")
+                    ("phi", "Phi"),
+                    ("volga", "Volga"),
+                    ("vanna", "Vanna")
                 ]
                 
                 factor_total = 0.0
@@ -248,10 +245,9 @@ async def calculate_fx_attribution(request: FXAttributionRequest):
                 
                 factors = []
                 factor_names = [
-                    ("delta", "Delta"), ("vega", "Vega"), ("gamma", "Gamma"),
-                    ("theta", "Theta"), ("rho", "Rho"), ("vanna", "Vanna"),
-                    ("charm", "Charm"), ("veta", "Veta"), ("vomma", "Vomma"),
-                    ("speed", "Speed"), ("theta_decay", "ThetaDecay")
+                    ("delta", "Delta"), ("gamma", "Gamma"), ("vega", "Vega"),
+                    ("theta", "Theta"), ("rho", "Rho"), ("phi", "Phi"),
+                    ("volga", "Volga"), ("vanna", "Vanna")
                 ]
                 
                 factor_total = 0.0
@@ -290,10 +286,9 @@ async def calculate_fx_attribution(request: FXAttributionRequest):
                 
                 factors = []
                 factor_names = [
-                    ("delta", "Delta"), ("vega", "Vega"), ("gamma", "Gamma"),
-                    ("theta", "Theta"), ("rho", "Rho"), ("vanna", "Vanna"),
-                    ("charm", "Charm"), ("veta", "Veta"), ("vomma", "Vomma"),
-                    ("speed", "Speed"), ("theta_decay", "ThetaDecay")
+                    ("delta", "Delta"), ("gamma", "Gamma"), ("vega", "Vega"),
+                    ("theta", "Theta"), ("rho", "Rho"), ("phi", "Phi"),
+                    ("volga", "Volga"), ("vanna", "Vanna")
                 ]
                 
                 factor_total = 0.0
@@ -397,8 +392,7 @@ async def get_fx_drilldown(request: FXDrilldownRequest):
         import random
         
         factor_names = [
-            "delta", "vega", "gamma", "theta", "rho", "vanna",
-            "charm", "veta", "vomma", "speed", "theta_decay"
+            "delta", "gamma", "vega", "theta", "rho", "phi", "volga", "vanna"
         ]
         
         start_factors = {code: random.uniform(0, 1) for code in factor_names}
@@ -526,8 +520,7 @@ async def get_fx_factor_trend(request: FXFactorTrendRequest):
         from datetime import datetime, timedelta
         
         # 因子代码列表
-        factor_codes = ['delta', 'vega', 'gamma', 'theta', 'rho', 'vanna', 
-                       'charm', 'veta', 'vomma', 'speed', 'theta_decay']
+        factor_codes = ['delta', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna']
         
         trend_data = []
         start = datetime.strptime(request.start_date, "%Y-%m-%d")

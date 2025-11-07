@@ -70,6 +70,7 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: 14px;
 }
 
 /* 顶部导航栏 - 白色背景 */
@@ -113,11 +114,11 @@ body {
 }
 
 .logo-text {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     color: var(--text-primary);
     font-family: 'Microsoft YaHei', 'PingFang SC', 'Segoe UI', 'Arial', sans-serif;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.5px;
     white-space: nowrap;
 }
 
@@ -137,8 +138,8 @@ body {
     text-decoration: none;
     padding: 8px 16px;
     border-radius: var(--radius-md);
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 400;
     transition: all 0.3s ease;
 }
 
@@ -174,7 +175,7 @@ body {
 
 .nav-user {
     color: var(--text-primary);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     cursor: pointer;
     padding: 8px 16px;
@@ -210,13 +211,14 @@ body {
     align-items: center;
     padding: 12px 16px;
     color: var(--text-sidebar);
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: all 0.3s ease;
     user-select: none;
     margin-bottom: 4px;
+    letter-spacing: 0.2px;
 }
 
 .sidebar-item:hover {
@@ -294,6 +296,13 @@ body {
     background: #ffffff;
 }
 
+/* 指标卡片专用header样式 */
+.metric-widget .widget-header {
+    padding: 20px 24px 16px;
+    border-bottom: none;
+    justify-content: flex-start;
+}
+
 .widget-header-right {
     display: flex;
     align-items: center;
@@ -307,35 +316,40 @@ body {
 }
 
 .metric-value-inline {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 28px;
+    font-weight: 700;
     color: var(--text-primary);
     line-height: 1;
 }
 
 .metric-unit-inline {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
     font-weight: 400;
 }
 
 .widget-title {
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     color: var(--text-primary);
     margin: 0;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.4px;
 }
 
 .widget-time {
     font-size: 12px;
     color: var(--text-tertiary);
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .widget-content {
     padding: 20px;
     background: #ffffff;
+}
+
+/* 指标卡片专用content样式 */
+.metric-widget .widget-content {
+    padding: 0 24px 24px;
 }
 
 /* Widgets 网格布局 */
@@ -394,8 +408,8 @@ body {
     color: var(--text-secondary);
     font-size: 13px;
     margin-bottom: 8px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
 }
 
 .config-group input[type="date"],
@@ -406,6 +420,7 @@ body {
     border-radius: var(--radius-md);
     color: var(--text-primary);
     font-size: 14px;
+    font-weight: 500;
     transition: all 0.3s ease;
     font-family: inherit;
 }
@@ -461,10 +476,10 @@ body {
     border: none;
     border-radius: var(--radius-md);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.4px;
 }
 
 .btn-primary {
@@ -502,116 +517,252 @@ body {
     transform: translateY(-1px);
 }
 
-/* 指标 Widget - 彩色渐变卡片 */
+/* 指标 Widget - 重新设计的卡片样式 */
 .metric-widget {
-    min-height: 160px;
+    min-height: 140px;
     border: none;
     overflow: hidden;
     position: relative;
     background: #ffffff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
 }
 
-/* 累计损益总额 - 突出显示（紫蓝渐变） */
+.metric-widget:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* 累计损益总额 - 突出显示（深蓝主题） */
 .metric-widget-primary {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: #ffffff;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    border: 2px solid rgba(102, 126, 234, 0.5);
-}
-
-.metric-widget-primary .widget-header,
-.metric-widget-primary .widget-content {
-    background: transparent;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.25);
     border: none;
 }
 
-.metric-widget-primary .widget-title,
-.metric-widget-primary .widget-time {
+.metric-widget-primary:hover {
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+}
+
+.metric-widget-primary .widget-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 20px 24px 16px;
+}
+
+.metric-widget-primary .widget-content {
+    background: transparent;
+    border: none;
+    padding: 0 24px 24px;
+}
+
+.metric-widget-primary .widget-title {
     color: rgba(255, 255, 255, 0.95);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
 }
 
 .metric-widget-primary .metric-value {
     color: #ffffff;
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 42px;
+    font-weight: 800;
     -webkit-text-fill-color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .metric-widget-primary .metric-unit {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.metric-widget-primary .trend-item {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: rgba(255, 255, 255, 0.95);
-}
-
-/* 利息损益 - 绿色渐变 */
+/* 利息损益 - 清新绿色 */
 .metric-widget:nth-of-type(2) {
-    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: #ffffff;
 }
 
-/* 估值损益 - 蓝色渐变 */
+.metric-widget:nth-of-type(2) .widget-header {
+    background: linear-gradient(90deg, rgba(56, 239, 125, 0.15) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 24px 16px;
+}
+
+.metric-widget:nth-of-type(2) .widget-content {
+    background: transparent;
+    border: none;
+    padding: 0 24px 24px;
+}
+
+.metric-widget:nth-of-type(2) .widget-title {
+    color: rgba(255, 255, 255, 0.98);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    position: relative;
+    padding-left: 12px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.metric-widget:nth-of-type(2) .widget-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 22px;
+    background: linear-gradient(180deg, #a8ffe0 0%, #38ef7d 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(56, 239, 125, 0.4);
+}
+
+.metric-widget:nth-of-type(2) .metric-value {
+    color: #ffffff;
+    font-size: 42px;
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.metric-widget:nth-of-type(2) .metric-unit {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* 估值损益 - 优雅蓝色 */
 .metric-widget:nth-of-type(3) {
-    background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: #ffffff;
 }
 
-/* 价差损益 - 红色渐变 */
+.metric-widget:nth-of-type(3) .widget-header {
+    background: linear-gradient(90deg, rgba(0, 242, 254, 0.15) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 24px 16px;
+}
+
+.metric-widget:nth-of-type(3) .widget-content {
+    background: transparent;
+    border: none;
+    padding: 0 24px 24px;
+}
+
+.metric-widget:nth-of-type(3) .widget-title {
+    color: rgba(255, 255, 255, 0.98);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    position: relative;
+    padding-left: 12px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.metric-widget:nth-of-type(3) .widget-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 22px;
+    background: linear-gradient(180deg, #b8e6ff 0%, #00f2fe 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 242, 254, 0.4);
+}
+
+.metric-widget:nth-of-type(3) .metric-value {
+    color: #ffffff;
+    font-size: 42px;
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.metric-widget:nth-of-type(3) .metric-unit {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* 价差损益 - 温暖橙色 */
 .metric-widget:nth-of-type(4) {
-    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: #ffffff;
+}
+
+.metric-widget:nth-of-type(4) .widget-header {
+    background: linear-gradient(90deg, rgba(254, 225, 64, 0.15) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 24px 16px;
+}
+
+.metric-widget:nth-of-type(4) .widget-content {
+    background: transparent;
+    border: none;
+    padding: 0 24px 24px;
+}
+
+.metric-widget:nth-of-type(4) .widget-title {
+    color: rgba(255, 255, 255, 0.98);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    position: relative;
+    padding-left: 12px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.metric-widget:nth-of-type(4) .widget-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 22px;
+    background: linear-gradient(180deg, #ffd4e5 0%, #fee140 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(254, 225, 64, 0.4);
+}
+
+.metric-widget:nth-of-type(4) .metric-value {
+    color: #ffffff;
+    font-size: 42px;
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.metric-widget:nth-of-type(4) .metric-unit {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .metric-main {
     display: flex;
     align-items: baseline;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-top: 8px;
 }
 
 .metric-value {
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 36px;
+    font-weight: 800;
     color: var(--text-primary);
-    letter-spacing: -0.5px;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
 }
 
 .metric-unit {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-tertiary);
-    font-weight: 500;
+    font-weight: 400;
 }
 
-.metric-trend {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.trend-item {
-    font-size: 12px;
-    padding: 6px 12px;
-    border-radius: var(--radius-md);
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.trend-item.positive {
-    color: var(--success);
-    background: var(--success-light);
-    border: 1px solid rgba(82, 196, 26, 0.2);
-}
-
-.trend-item.negative {
-    color: var(--danger);
-    background: var(--danger-light);
-    border: 1px solid rgba(255, 77, 79, 0.2);
-}
-
-.trend-item.neutral {
-    color: var(--text-tertiary);
-    background: var(--bg-secondary);
-}
+/* 移除了metric-trend相关样式，因为不再使用同比环比 */
 
 /* 图表 Widget */
 .chart-widget {
@@ -655,9 +806,9 @@ table {
 thead th {
     background: #fafafa;
     color: var(--text-primary);
-    padding: 14px 16px;
+    padding: 10px 12px;
     text-align: left;
-    font-weight: 600;
+    font-weight: 700;
     border-bottom: 2px solid var(--border-color);
     white-space: nowrap;
     font-size: 13px;
@@ -665,10 +816,12 @@ thead th {
 }
 
 tbody td {
-    padding: 14px 16px;
+    padding: 10px 12px;
     border-bottom: 1px solid var(--border-color);
     color: var(--text-secondary);
     transition: all 0.2s ease;
+    font-size: 13px;
+    font-weight: 400;
 }
 
 tbody tr {
@@ -684,7 +837,7 @@ tbody tr:hover {
     color: var(--text-tertiary);
     padding: 60px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 /* 警告 Widget */
@@ -710,17 +863,18 @@ tbody tr:hover {
     border-left: 3px solid var(--warning);
     border-radius: var(--radius-sm);
     color: var(--text-secondary);
+    font-weight: 500;
 }
 
 /* 数字格式化 */
 .positive {
     color: var(--success);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .negative {
     color: var(--danger);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .neutral {
@@ -905,9 +1059,9 @@ tbody tr:hover {
 .modal-title {
     margin: 0;
     color: var(--text-primary);
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: 0.3px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .modal-close {
@@ -966,7 +1120,7 @@ tbody tr:hover {
     color: var(--primary-color);
     background: transparent;
     border-bottom-color: var(--primary-color);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .tab-content {
@@ -1028,11 +1182,12 @@ tbody tr:hover {
 .product-chart-right table th {
     background: var(--bg-secondary);
     color: var(--text-primary);
-    font-weight: 600;
+    font-weight: 700;
     padding: 12px 16px;
     text-align: left;
     border-bottom: 2px solid var(--border-color);
     font-size: 14px;
+    letter-spacing: 0.3px;
 }
 
 .product-chart-right table td {
@@ -1040,6 +1195,7 @@ tbody tr:hover {
     border-bottom: 1px solid var(--border-color);
     color: var(--text-secondary);
     font-size: 14px;
+    font-weight: 400;
 }
 
 .product-chart-right table tbody tr:hover {
@@ -1099,12 +1255,39 @@ tbody tr:hover {
     color: var(--primary-color);
     background: transparent;
     border-bottom-color: var(--primary-color);
+    font-weight: 700;
 }
 
 /* 按钮小尺寸 */
 .btn-small {
     padding: 6px 14px;
     font-size: 12px;
+}
+
+/* 操作按钮样式 - 蓝色主题 */
+.action-btn {
+    padding: 6px 16px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.2px;
+    background: var(--primary-color);
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
+}
+
+.action-btn:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 4px 8px rgba(24, 144, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
 }
 
 /* 全宽图表容器 */
@@ -1208,16 +1391,11 @@ tbody tr:hover {
                 <div class="widget metric-widget metric-widget-primary">
                     <div class="widget-header">
                         <h3 class="widget-title">累计损益总额</h3>
-                        <div class="widget-time">19:38:53</div>
                     </div>
                     <div class="widget-content">
                         <div class="metric-main">
-                <div class="metric-value" id="totalPnl">--</div>
-                <div class="metric-unit">万元</div>
-            </div>
-                        <div class="metric-trend">
-                            <span class="trend-item positive">同比 +100.0% ▲</span>
-                            <span class="trend-item positive">环比 +100.0% ▲</span>
+                            <div class="metric-value" id="totalPnl">--</div>
+                            <div class="metric-unit">万元</div>
                         </div>
                     </div>
                 </div>
@@ -1226,16 +1404,11 @@ tbody tr:hover {
                 <div class="widget metric-widget">
                     <div class="widget-header">
                         <h3 class="widget-title">利息损益</h3>
-                        <div class="widget-time">19:38:53</div>
                     </div>
                     <div class="widget-content">
                         <div class="metric-main">
                             <div class="metric-value" id="interestPnl">--</div>
                             <div class="metric-unit">万元</div>
-                        </div>
-                        <div class="metric-trend">
-                            <span class="trend-item positive">同比 +100.0% ▲</span>
-                            <span class="trend-item positive">环比 +100.0% ▲</span>
                         </div>
                     </div>
                 </div>
@@ -1244,34 +1417,24 @@ tbody tr:hover {
                 <div class="widget metric-widget">
                     <div class="widget-header">
                         <h3 class="widget-title">估值损益</h3>
-                        <div class="widget-time">19:38:53</div>
                     </div>
                     <div class="widget-content">
                         <div class="metric-main">
                             <div class="metric-value" id="valuationPnl">--</div>
                             <div class="metric-unit">万元</div>
                         </div>
-                        <div class="metric-trend">
-                            <span class="trend-item positive">同比 +100.0% ▲</span>
-                            <span class="trend-item positive">环比 +100.0% ▲</span>
-                        </div>
-            </div>
-            </div>
+                    </div>
+                </div>
 
                 <!-- 价差损益 -->
                 <div class="widget metric-widget">
                     <div class="widget-header">
                         <h3 class="widget-title">价差损益</h3>
-                        <div class="widget-time">19:38:53</div>
                     </div>
                     <div class="widget-content">
                         <div class="metric-main">
                             <div class="metric-value" id="priceDiffPnl">--</div>
                             <div class="metric-unit">万元</div>
-                        </div>
-                        <div class="metric-trend">
-                            <span class="trend-item positive">同比 +100.0% ▲</span>
-                            <span class="trend-item positive">环比 +100.0% ▲</span>
                         </div>
                     </div>
                 </div>
@@ -1350,11 +1513,12 @@ tbody tr:hover {
                                                 <th>产品</th>
                                                 <th>损益（万元）</th>
                                                 <th>占比</th>
+                                                <th>操作</th>
                                             </tr>
                                         </thead>
                                         <tbody id="productTableBody">
                                             <tr>
-                                                <td colspan="3" class="empty-state">请点击查询按钮加载数据</td>
+                                                <td colspan="4" class="empty-state">请点击查询按钮加载数据</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1477,105 +1641,92 @@ tbody tr:hover {
                     <div class="widget-content" style="padding: 16px;">
                         <!-- TAB 导航 -->
                         <div class="tab-nav">
-                            <button class="tab-button active" data-tab="fxTab1">按投组维度</button>
-                            <button class="tab-button" data-tab="fxTab2">按产品维度</button>
-                            <button class="tab-button" data-tab="fxTab3">按货币对维度</button>
+                            <button class="tab-button active" data-tab="fxTab1">归因明细</button>
+                            <button class="tab-button" data-tab="fxTab2">按投组</button>
+                            <button class="tab-button" data-tab="fxTab3">按资产标的</button>
                         </div>
                         
-                        <!-- 日期选择器 -->
-                        <div class="detail-date-selector">
-                            <label for="fxDetailDateSelect">选择日期：</label>
-                            <input type="date" id="fxDetailDateSelect">
-                        </div>
-                        
-                        <!-- Tab1: 按投组维度表格 -->
+                        <!-- Tab1: 归因明细 - 按投组维度展示归因结果 -->
                         <div id="fxTab1" class="tab-content active">
                             <div class="table-container">
-                                <table id="fxPortfolioTable">
+                                <table id="fxAttributionTable">
                                     <thead>
                                         <tr>
-                                            <th>投组</th>
+                                            <th>Folder</th>
+                                            <th>总敞口</th>
                                             <th>估值损益</th>
                                             <th>Delta</th>
-                                            <th>Vega</th>
                                             <th>Gamma</th>
+                                            <th>Vega</th>
                                             <th>Theta</th>
                                             <th>Rho</th>
+                                            <th>Phi</th>
+                                            <th>Volga</th>
                                             <th>Vanna</th>
-                                            <th>Charm</th>
-                                            <th>Veta</th>
-                                            <th>Vomma</th>
-                                            <th>Speed</th>
-                                            <th>ThetaDecay</th>
                                             <th>无法解释部分</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="fxPortfolioTableBody">
+                                    <tbody id="fxAttributionTableBody">
                                         <tr>
-                                            <td colspan="15" class="empty-state">请点击查询按钮加载数据</td>
+                                            <td colspan="13" class="empty-state">请点击查询按钮加载数据</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         
-                        <!-- Tab2: 按产品维度饼图+表格 -->
+                        <!-- Tab2: 按投组 - 展示敏感值 -->
                         <div id="fxTab2" class="tab-content">
-                            <div class="product-chart-layout">
-                                <!-- 左侧：饼图 -->
-                                <div class="product-chart-left">
-                                    <canvas id="fxProductPieChart"></canvas>
-                                </div>
-                                <!-- 右侧：表格 -->
-                                <div class="product-chart-right">
-                                    <div class="table-container">
-                                        <table id="fxProductTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>产品</th>
-                                                    <th>估值损益（万元）</th>
-                                                    <th>占比</th>
-                                                    <th>操作</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="fxProductTableBody">
-                                                <tr>
-                                                    <td colspan="4" class="empty-state">请点击查询按钮加载数据</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                            <div class="table-container">
+                                <table id="fxPortfolioSensitivityTable">
+                                    <thead>
+                                        <tr>
+                                            <th>投组</th>
+                                            <th>总敞口</th>
+                                            <th>Delta</th>
+                                            <th>Gamma</th>
+                                            <th>Vega</th>
+                                            <th>Theta</th>
+                                            <th>Rho</th>
+                                            <th>Phi</th>
+                                            <th>Volga</th>
+                                            <th>Vanna</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="fxPortfolioSensitivityTableBody">
+                                        <tr>
+                                            <td colspan="11" class="empty-state">请点击查询按钮加载数据</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         
-                        <!-- Tab3: 按货币对维度表格 -->
+                        <!-- Tab3: 按资产标的 - 按货币对展示 -->
                         <div id="fxTab3" class="tab-content">
                             <div class="table-container">
-                                <table id="fxCurrencyPairTable">
+                                <table id="fxAssetTargetTable">
                                     <thead>
                                         <tr>
                                             <th>货币对</th>
                                             <th>估值损益</th>
                                             <th>Delta</th>
-                                            <th>Vega</th>
                                             <th>Gamma</th>
+                                            <th>Vega</th>
                                             <th>Theta</th>
                                             <th>Rho</th>
+                                            <th>Phi</th>
+                                            <th>Volga</th>
                                             <th>Vanna</th>
-                                            <th>Charm</th>
-                                            <th>Veta</th>
-                                            <th>Vomma</th>
-                                            <th>Speed</th>
-                                            <th>ThetaDecay</th>
                                             <th>无法解释部分</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="fxCurrencyPairTableBody">
+                                    <tbody id="fxAssetTargetTableBody">
                                         <tr>
-                                            <td colspan="15" class="empty-state">请点击查询按钮加载数据</td>
+                                            <td colspan="12" class="empty-state">请点击查询按钮加载数据</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1609,14 +1760,40 @@ tbody tr:hover {
                                 <th>价格</th>
                                 <th>估值损益（万元）</th>
                                 <th>投组</th>
+                                <th>Delta</th>
+                                <th>Vega</th>
+                                <th>Gamma</th>
+                                <th>Theta</th>
+                                <th>Rho</th>
+                                <th>Vanna</th>
+                                <th>Charm</th>
+                                <th>Veta</th>
+                                <th>Vomma</th>
+                                <th>Speed</th>
+                                <th>ThetaDecay</th>
                             </tr>
                         </thead>
                         <tbody id="fxTransactionDetailBody">
                             <tr>
-                                <td colspan="10" class="empty-state">加载中...</td>
+                                <td colspan="21" class="empty-state">加载中...</td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 贡献度弹窗 -->
+    <div id="fxContributionModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 1000px;">
+            <div class="modal-header">
+                <h3 class="modal-title">贡献度分析</h3>
+                <span class="modal-close" id="fxContributionClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="fxContributionContent">
+                    <p style="padding: 20px; color: var(--text-secondary);">加载中...</p>
                 </div>
             </div>
         </div>
@@ -1677,13 +1854,36 @@ tbody tr:hover {
     
     
     
+    
 
     <script>
 /**
  * API 调用模块
  */
 
-const API_BASE_URL = 'http://localhost:8002/api';
+// API基础URL - 自动检测环境
+// 优先级：环境变量 > 自动检测
+const API_BASE_URL = (() => {
+    // 1. 优先使用环境变量（如果设置了）
+    if (window.API_BASE_URL) {
+        return window.API_BASE_URL;
+    }
+    
+    // 2. 检查是否有后端URL配置（Railway等平台）
+    const backendUrl = document.querySelector('meta[name="backend-url"]')?.content;
+    if (backendUrl) {
+        return backendUrl + '/api';
+    }
+    
+    // 3. 如果当前是localhost或127.0.0.1，使用本地开发地址
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return 'http://localhost:8002/api';
+    }
+    
+    // 4. 公网部署：使用相对路径（通过Nginx/反向代理）
+    // 或者使用当前域名（如果前后端同域）
+    return '/api';
+})();
 
 class APIClient {
     /**
@@ -2654,6 +2854,168 @@ function closeTransactionModal() {
 // 将函数暴露到全局，供onclick使用
 window.showTransactionDetail = showTransactionDetail;
 
+// 显示产品明细
+async function showProductDetail(productName) {
+    if (!elements.transactionDetailModal) return;
+    
+    // 显示模态框
+    elements.transactionDetailModal.style.display = 'flex';
+    
+    // 显示加载状态
+    elements.transactionDetailContent.innerHTML = `
+        <div style="padding: 20px;">
+            <h4>产品: ${productName}</h4>
+            <p style="margin-top: 16px; color: var(--text-secondary);">交易明细数据加载中...</p>
+        </div>
+    `;
+    
+    try {
+        // 从当前数据中获取该产品对应的产品代码
+        if (!state.currentData || !state.currentData.details) {
+            throw new Error('暂无数据');
+        }
+        
+        // 产品名称到产品代码的反向映射（与后端保持一致）
+        const productNameToCodesMap = {
+            '外汇即期': ['FXSPOT', 'fxspot', 'fx_spot', 'fxspot01'],
+            '外汇远期': ['FWD', 'FWD01', 'fwd01', 'fwd02'],
+            '外汇掉期': ['FXSW', 'fxsw01', 'fxsw02'],
+            '外汇期权': ['FXOPT', 'FXO', 'fxo01', 'fxo02', 'fxopt'],
+            'CCS': ['CCS', 'ccs01'],
+            'IRS': ['IRS', 'SW01', 'SW02', 'sw01', 'sw02']
+        };
+        
+        // 获取该产品对应的所有可能的产品代码
+        const productCodes = productNameToCodesMap[productName] || [productName];
+        
+        // 从details中查找匹配的产品代码
+        let matchedProductCode = null;
+        for (const detail of state.currentData.details) {
+            const detailValue = detail.dimension_value || '';
+            for (const code of productCodes) {
+                // 不区分大小写匹配
+                if (detailValue.toUpperCase() === code.toUpperCase() || 
+                    detailValue.toUpperCase().includes(code.toUpperCase()) ||
+                    code.toUpperCase().includes(detailValue.toUpperCase())) {
+                    matchedProductCode = detail.dimension_value;
+                    break;
+                }
+            }
+            if (matchedProductCode) break;
+        }
+        
+        // 如果没找到，使用第一个产品代码作为默认值
+        if (!matchedProductCode && productCodes.length > 0) {
+            matchedProductCode = productCodes[0];
+        }
+        
+        // 获取当前查询参数
+        const startDate = elements.startDate.value;
+        const endDate = elements.endDate.value;
+        
+        // 调用API获取交易明细
+        const requestData = {
+            start_date: startDate,
+            end_date: endDate,
+            dimension_type: 'product',
+            dimension_value: matchedProductCode || productName,
+            portfolio_ids: state.selectedPortfolio && state.selectedPortfolio !== 'all' ? state.selectedPortfolio : null,
+            product_codes: matchedProductCode || productCodes[0] || productName
+        };
+        
+        console.log('Fetching product transaction details:', requestData);
+        
+        const response = await api.getTransactionDetails(requestData);
+        
+        // 更新交易明细表格（使用相同的函数，但标题改为产品名称）
+        updateProductTransactionTable(response.transactions || [], productName);
+        
+    } catch (error) {
+        console.error('Failed to load product transaction details:', error);
+        elements.transactionDetailContent.innerHTML = `
+            <div style="padding: 20px;">
+                <h4>产品: ${productName}</h4>
+                <p style="margin-top: 16px; color: var(--danger);">加载失败：${error.message || '未知错误'}</p>
+            </div>
+        `;
+    }
+}
+
+// 更新产品交易明细表格
+function updateProductTransactionTable(transactions, productName) {
+    if (!elements.transactionDetailContent) return;
+    
+    if (!transactions || transactions.length === 0) {
+        elements.transactionDetailContent.innerHTML = `
+            <div style="padding: 20px;">
+                <h4>产品: ${productName}</h4>
+                <p style="margin-top: 16px; color: var(--text-secondary);">暂无交易数据</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // 构建表格HTML（与updateTransactionTable相同）
+    let tableHTML = `
+        <div style="padding: 20px;">
+            <h4>产品: ${productName}</h4>
+            <p style="margin-top: 8px; color: var(--text-secondary); font-size: 14px;">共 ${transactions.length} 笔交易</p>
+            <div class="table-container" style="margin-top: 16px; max-height: 500px; overflow-y: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
+                            <th style="padding: 12px; text-align: left; font-weight: 600; color: var(--text-primary);">交易ID</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600; color: var(--text-primary);">交易日期</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600; color: var(--text-primary);">产品代码</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600; color: var(--text-primary);">产品名称</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600; color: var(--text-primary);">交易方向</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600; color: var(--text-primary);">名义本金（万元）</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600; color: var(--text-primary);">价格</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600; color: var(--text-primary);">利息损益</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600; color: var(--text-primary);">价差损益</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600; color: var(--text-primary);">估值损益</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600; color: var(--text-primary);">融资成本</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600; color: var(--text-primary);">手续费</th>
+                            <th style="padding: 12px; text-align: right; font-weight: 600; color: var(--text-primary);">总损益</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    `;
+    
+    transactions.forEach(txn => {
+        const pnlClass = txn.total_pnl > 0 ? 'positive' : txn.total_pnl < 0 ? 'negative' : '';
+        tableHTML += `
+            <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 10px;">${txn.transaction_id}</td>
+                <td style="padding: 10px;">${txn.trade_date}</td>
+                <td style="padding: 10px;">${txn.product_code}</td>
+                <td style="padding: 10px;">${txn.product_name}</td>
+                <td style="padding: 10px;">${txn.trade_direction}</td>
+                <td style="padding: 10px; text-align: right;">${formatNumber(txn.notional_amount)}</td>
+                <td style="padding: 10px; text-align: right;">${txn.price ? txn.price.toLocaleString('zh-CN', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) : '--'}</td>
+                <td style="padding: 10px; text-align: right; ${getNumberClass(txn.pnl_interest)}">${formatNumber(txn.pnl_interest)}</td>
+                <td style="padding: 10px; text-align: right; ${getNumberClass(txn.pnl_price_diff)}">${formatNumber(txn.pnl_price_diff)}</td>
+                <td style="padding: 10px; text-align: right; ${getNumberClass(txn.pnl_valuation)}">${formatNumber(txn.pnl_valuation)}</td>
+                <td style="padding: 10px; text-align: right; ${getNumberClass(txn.pnl_financing)}">${formatNumber(txn.pnl_financing)}</td>
+                <td style="padding: 10px; text-align: right; ${getNumberClass(txn.pnl_fee)}">${formatNumber(txn.pnl_fee)}</td>
+                <td style="padding: 10px; text-align: right; ${pnlClass}"><strong>${formatNumber(txn.total_pnl)}</strong></td>
+            </tr>
+        `;
+    });
+    
+    tableHTML += `
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+    
+    elements.transactionDetailContent.innerHTML = tableHTML;
+}
+
+// 将函数暴露到全局
+window.showProductDetail = showProductDetail;
+
 // 显示错误
 function showError(message) {
     alert(message);
@@ -3621,7 +3983,7 @@ function updateProductTable(labels, data, total) {
     productTableBody.innerHTML = '';
     
     if (!labels || labels.length === 0) {
-        productTableBody.innerHTML = '<tr><td colspan="3" class="empty-state">暂无数据</td></tr>';
+        productTableBody.innerHTML = '<tr><td colspan="4" class="empty-state">暂无数据</td></tr>';
         return;
     }
     
@@ -3641,6 +4003,9 @@ function updateProductTable(labels, data, total) {
             <td>${item.label}</td>
             <td class="${valueClass}">${item.value.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
             <td class="${percentageClass}">${item.percentage}%</td>
+            <td>
+                <button class="action-btn" onclick="showProductDetail('${item.label.replace(/'/g, "\\'")}')">查看明细</button>
+            </td>
         `;
         productTableBody.appendChild(row);
     });
@@ -3782,15 +4147,13 @@ const fxElements = {
     warningsList: document.getElementById('fxWarningsList'),
     
     // 表格
-    portfolioTableBody: document.getElementById('fxPortfolioTableBody'),
-    productTableBody: document.getElementById('fxProductTableBody'),
-    currencyPairTableBody: document.getElementById('fxCurrencyPairTableBody'),
+    attributionTableBody: document.getElementById('fxAttributionTableBody'),
+    portfolioSensitivityTableBody: document.getElementById('fxPortfolioSensitivityTableBody'),
+    assetTargetTableBody: document.getElementById('fxAssetTargetTableBody'),
     
     // Tab按钮
     tabButtons: document.querySelectorAll('.tab-nav .tab-button[data-tab^="fxTab"]'),
     
-    // 日期选择器
-    detailDateSelect: document.getElementById('fxDetailDateSelect')
 };
 
 // 初始化
@@ -3801,40 +4164,6 @@ async function initFXAttribution() {
         fxElements.endDate.value = today;
     }
     
-    // 设置明细日期选择器默认值为结束日期（如果已查询）
-    if (fxElements.detailDateSelect) {
-        fxElements.detailDateSelect.value = fxElements.endDate ? fxElements.endDate.value : today;
-        
-        // 设置日期选择器的最大值为结束日期，最小值为起始日期
-        if (fxElements.startDate && fxElements.endDate) {
-            fxElements.detailDateSelect.min = fxElements.startDate.value;
-            fxElements.detailDateSelect.max = fxElements.endDate.value;
-        }
-        
-        // 监听日期选择器变化，更新日期范围限制
-        fxElements.detailDateSelect.addEventListener('change', function() {
-            // 可以在这里添加日期变化后的处理逻辑
-            console.log('明细日期已选择:', fxElements.detailDateSelect.value);
-        });
-    }
-    
-    // 监听查询条件变化，更新明细日期选择器的范围
-    if (fxElements.startDate && fxElements.endDate) {
-        const updateDetailDateRange = () => {
-            if (fxElements.detailDateSelect) {
-                fxElements.detailDateSelect.min = fxElements.startDate.value;
-                fxElements.detailDateSelect.max = fxElements.endDate.value;
-                // 如果当前选择的日期不在新范围内，则重置为结束日期
-                if (fxElements.detailDateSelect.value < fxElements.startDate.value || 
-                    fxElements.detailDateSelect.value > fxElements.endDate.value) {
-                    fxElements.detailDateSelect.value = fxElements.endDate.value;
-                }
-            }
-        };
-        
-        fxElements.startDate.addEventListener('change', updateDetailDateRange);
-        fxElements.endDate.addEventListener('change', updateDetailDateRange);
-    }
     
     // 加载基础数据
     await loadFXBaseData();
@@ -3928,20 +4257,6 @@ async function handleFXQuery() {
         // 显示加载状态
         fxElements.queryBtn.disabled = true;
         fxElements.queryBtn.textContent = '查询中...';
-        
-        // 更新明细日期选择器的范围
-        if (fxElements.detailDateSelect) {
-            fxElements.detailDateSelect.min = startDate;
-            fxElements.detailDateSelect.max = endDate;
-            // 如果当前选择的日期不在新范围内，则重置为结束日期
-            if (fxElements.detailDateSelect.value < startDate || 
-                fxElements.detailDateSelect.value > endDate) {
-                fxElements.detailDateSelect.value = endDate;
-            } else if (!fxElements.detailDateSelect.value) {
-                // 如果没有选择日期，默认设为结束日期
-                fxElements.detailDateSelect.value = endDate;
-            }
-        }
         
         // 调用API获取三个维度的数据
         const baseRequestData = {
@@ -4069,17 +4384,17 @@ function updateFXTabs(details) {
     
     // 根据Tab使用对应的数据
     if (tabId === 'fxTab1') {
-        // 按投组维度
+        // 归因明细 - 按投组维度展示归因结果
         const portfolioData = fxState.fxData?.portfolio;
-        updateFXPortfolioTable(portfolioData?.details || []);
+        updateFXAttributionTable(portfolioData?.details || []);
     } else if (tabId === 'fxTab2') {
-        // 按产品维度
-        const productData = fxState.fxData?.product;
-        updateFXProductTable(productData?.details || []);
+        // 按投组 - 展示敏感值
+        const portfolioData = fxState.fxData?.portfolio;
+        updateFXPortfolioSensitivityTable(portfolioData?.details || []);
     } else if (tabId === 'fxTab3') {
-        // 按货币对维度
+        // 按资产标的 - 展示货币对归因结果
         const currencyPairData = fxState.fxData?.currencyPair;
-        updateFXCurrencyPairTable(currencyPairData?.details || []);
+        updateFXAssetTargetTable(currencyPairData?.details || []);
     }
 }
 
@@ -4092,7 +4407,55 @@ function updateFXMetrics(data) {
     }
 }
 
-// 投组名称映射
+// Folder名称映射（归因明细使用）
+const fxFolderNameMap = {
+    'BNTCBDEPO': 'BNTCBDEPO',
+    'BNTFIDEPO': 'BNTFIDEPO',
+    'BNBCMBOND': 'BNBCMBOND',
+    'BNBMMFXSWP': 'BNBMMFXSWP',
+    'BNBMMINTBK': 'BNBMMINTBK',
+    'BNMMINTBKE': 'BNMMINTBKE'
+};
+
+// 映射Folder显示名称（用于归因明细）
+function mapFXFolderName(dimensionValue) {
+    if (!dimensionValue) return '未知';
+    
+    // 标准化处理：去除空格，转换为大写
+    const value = dimensionValue.trim().toUpperCase();
+    
+    // 尝试直接匹配（不区分大小写）
+    if (fxFolderNameMap[value]) {
+        return fxFolderNameMap[value];
+    }
+    
+    // 如果已经是标准Folder名称（原始大小写），直接返回
+    if (fxFolderNameMap[dimensionValue.trim()]) {
+        return fxFolderNameMap[dimensionValue.trim()];
+    }
+    
+    // 尝试匹配（不区分大小写）
+    for (const [key, mappedValue] of Object.entries(fxFolderNameMap)) {
+        if (value === key.toUpperCase()) {
+            return mappedValue;
+        }
+    }
+    
+    // 如果包含Folder名称的一部分，尝试匹配
+    const folderNames = Object.keys(fxFolderNameMap);
+    for (const folderName of folderNames) {
+        const folderUpper = folderName.toUpperCase();
+        if (value === folderUpper || value.includes(folderUpper) || folderUpper.includes(value)) {
+            return fxFolderNameMap[folderName];
+        }
+    }
+    
+    // 如果后端返回的就是Folder名称，直接返回（标准化为大写）
+    // 这样可以确保后端返回的Folder名称能正确显示
+    return dimensionValue.trim().toUpperCase();
+}
+
+// 投组名称映射（保留用于其他地方）
 const fxPortfolioNameMap = {
     '外汇即期投组': '外汇即期投组',
     '外汇远期投组': '外汇远期投组',
@@ -4100,7 +4463,7 @@ const fxPortfolioNameMap = {
     '外汇期权投组': '外汇期权投组'
 };
 
-// 映射投组显示名称
+// 映射投组显示名称（用于按投组和按资产标的Tab）
 function mapFXPortfolioName(dimensionValue) {
     if (!dimensionValue) return '未知';
     
@@ -4157,36 +4520,45 @@ function mapFXPortfolioName(dimensionValue) {
     return dimensionValue;
 }
 
-// 更新投组维度表格
-function updateFXPortfolioTable(details) {
-    if (!fxElements.portfolioTableBody) return;
+// Tab1: 更新归因明细表格（按投组维度，包含总敞口和资产标的）
+function updateFXAttributionTable(details) {
+    if (!fxElements.attributionTableBody) return;
     
-    fxElements.portfolioTableBody.innerHTML = '';
+    fxElements.attributionTableBody.innerHTML = '';
     
     if (!details || details.length === 0) {
-        fxElements.portfolioTableBody.innerHTML = '<tr><td colspan="15" class="empty-state">暂无数据</td></tr>';
+        fxElements.attributionTableBody.innerHTML = '<tr><td colspan="16" class="empty-state">暂无数据</td></tr>';
         return;
     }
     
-    // 按投组名称去重并汇总
+    // 按Folder名称去重并汇总
     const portfolioMap = new Map();
     details.forEach(detail => {
-        const portfolioName = mapFXPortfolioName(detail.dimension_value);
+        const folderName = mapFXFolderName(detail.dimension_value);
         
-        if (!portfolioMap.has(portfolioName)) {
-            portfolioMap.set(portfolioName, {
-                dimension_value: portfolioName,
+        if (!portfolioMap.has(folderName)) {
+            portfolioMap.set(folderName, {
+                dimension_value: folderName,
                 valuation_pnl: 0,
                 factors: {},
                 unexplained: 0,
+                total_exposure: 0, // 总敞口
                 start_date_factors: detail.start_date_factors,
                 end_date_factors: detail.end_date_factors
             });
         }
         
-        const aggregated = portfolioMap.get(portfolioName);
+        const aggregated = portfolioMap.get(folderName);
         aggregated.valuation_pnl += detail.valuation_pnl || 0;
         aggregated.unexplained += detail.unexplained || 0;
+        
+        // 收集总敞口（如果有的话，否则使用估值损益的绝对值作为估算）
+        if (detail.total_exposure !== undefined) {
+            aggregated.total_exposure += Math.abs(detail.total_exposure);
+        } else {
+            // 如果没有总敞口数据，使用估值损益的绝对值作为估算
+            aggregated.total_exposure += Math.abs(detail.valuation_pnl || 0) * 10; // 估算系数
+        }
         
         // 汇总因子
         (detail.factors || []).forEach(factor => {
@@ -4205,9 +4577,168 @@ function updateFXPortfolioTable(details) {
     Array.from(portfolioMap.values()).forEach(aggregated => {
         // 将factors对象转换为数组
         aggregated.factors = Object.values(aggregated.factors);
-        const row = createFXTableRow(aggregated, 'portfolio');
-        fxElements.portfolioTableBody.appendChild(row);
+        
+        const row = createFXAttributionTableRow(aggregated);
+        fxElements.attributionTableBody.appendChild(row);
     });
+}
+
+// Tab2: 更新按投组敏感值表格
+function updateFXPortfolioSensitivityTable(details) {
+    if (!fxElements.portfolioSensitivityTableBody) return;
+    
+    fxElements.portfolioSensitivityTableBody.innerHTML = '';
+    
+    if (!details || details.length === 0) {
+        fxElements.portfolioSensitivityTableBody.innerHTML = '<tr><td colspan="14" class="empty-state">暂无数据</td></tr>';
+        return;
+    }
+    
+    // 按投组名称去重并汇总敏感值和总敞口
+    const portfolioMap = new Map();
+    details.forEach(detail => {
+        const portfolioName = mapFXPortfolioName(detail.dimension_value);
+        
+        if (!portfolioMap.has(portfolioName)) {
+            portfolioMap.set(portfolioName, {
+                dimension_value: portfolioName,
+                factors: {},
+                total_exposure: 0,
+                valuation_pnl: 0,
+                unexplained: 0
+            });
+        }
+        
+        const aggregated = portfolioMap.get(portfolioName);
+        
+        // 收集总敞口
+        if (detail.total_exposure !== undefined) {
+            aggregated.total_exposure += Math.abs(detail.total_exposure);
+        } else {
+            // 如果没有总敞口数据，使用估值损益的绝对值作为估算
+            aggregated.total_exposure += Math.abs(detail.valuation_pnl || 0) * 10;
+        }
+        
+        // 收集估值损益和无法解释部分（用于贡献度计算）
+        aggregated.valuation_pnl += detail.valuation_pnl || 0;
+        aggregated.unexplained += detail.unexplained || 0;
+        
+        // 汇总因子（敏感值）
+        (detail.factors || []).forEach(factor => {
+            if (!aggregated.factors[factor.factor_code]) {
+                aggregated.factors[factor.factor_code] = {
+                    factor_code: factor.factor_code,
+                    factor_name: factor.factor_name,
+                    pnl_contribution: 0
+                };
+            }
+            aggregated.factors[factor.factor_code].pnl_contribution += factor.pnl_contribution || 0;
+        });
+    });
+    
+    // 转换为数组并创建行
+    Array.from(portfolioMap.values()).forEach(aggregated => {
+        const row = createFXSensitivityTableRow(aggregated);
+        fxElements.portfolioSensitivityTableBody.appendChild(row);
+    });
+}
+
+// 填充Tab3投组选择器
+function populateFXAssetTargetPortfolioSelect(portfolioResponse) {
+    if (!fxElements.assetTargetPortfolioSelect) return;
+    
+    // 保存当前选择的值
+    const currentValue = fxElements.assetTargetPortfolioSelect.value;
+    
+    // 清空现有选项（保留"请选择投组"选项）
+    fxElements.assetTargetPortfolioSelect.innerHTML = '<option value="">请选择投组</option>';
+    
+    if (!portfolioResponse || !portfolioResponse.details || portfolioResponse.details.length === 0) {
+        return;
+    }
+    
+    // 从portfolio数据中提取投组列表
+    const portfolioSet = new Set();
+    portfolioResponse.details.forEach(detail => {
+        const portfolioName = mapFXPortfolioName(detail.dimension_value);
+        portfolioSet.add(portfolioName);
+    });
+    
+    // 添加"全机构"选项
+    const optionAll = document.createElement('option');
+    optionAll.value = 'all';
+    optionAll.textContent = '全机构';
+    fxElements.assetTargetPortfolioSelect.appendChild(optionAll);
+    
+    // 添加各个投组选项
+    Array.from(portfolioSet).sort().forEach(portfolioName => {
+        const option = document.createElement('option');
+        // 使用标准化的投组名称作为value，方便匹配
+        option.value = portfolioName;
+        option.textContent = portfolioName;
+        fxElements.assetTargetPortfolioSelect.appendChild(option);
+    });
+    
+    // 恢复之前选择的值（如果仍然存在）
+    if (currentValue) {
+        fxElements.assetTargetPortfolioSelect.value = currentValue;
+    }
+}
+
+// Tab3: 更新按资产标的表格（直接显示所有货币对数据）
+function updateFXAssetTargetTable(details) {
+    if (!fxElements.assetTargetTableBody) return;
+    
+    fxElements.assetTargetTableBody.innerHTML = '';
+    
+    if (!details || details.length === 0) {
+        fxElements.assetTargetTableBody.innerHTML = '<tr><td colspan="15" class="empty-state">暂无数据</td></tr>';
+        return;
+    }
+    
+    // 按货币对汇总（虽然currencyPair数据已经按货币对汇总，但这里再次汇总以确保一致性）
+    const currencyPairMap = new Map();
+    details.forEach(detail => {
+        const currencyPair = detail.dimension_value || '未知货币对';
+        
+        if (!currencyPairMap.has(currencyPair)) {
+            currencyPairMap.set(currencyPair, {
+                dimension_value: currencyPair,
+                valuation_pnl: 0,
+                factors: {},
+                unexplained: 0
+            });
+        }
+        
+        const aggregated = currencyPairMap.get(currencyPair);
+        aggregated.valuation_pnl += detail.valuation_pnl || 0;
+        aggregated.unexplained += detail.unexplained || 0;
+        
+        // 汇总因子
+        (detail.factors || []).forEach(factor => {
+            if (!aggregated.factors[factor.factor_code]) {
+                aggregated.factors[factor.factor_code] = {
+                    factor_code: factor.factor_code,
+                    factor_name: factor.factor_name,
+                    pnl_contribution: 0
+                };
+            }
+            aggregated.factors[factor.factor_code].pnl_contribution += factor.pnl_contribution || 0;
+        });
+    });
+    
+    // 转换为数组并创建行
+    Array.from(currencyPairMap.values()).forEach(aggregated => {
+        aggregated.factors = Object.values(aggregated.factors);
+        const row = createFXTableRow(aggregated, 'currency_pair');
+        fxElements.assetTargetTableBody.appendChild(row);
+    });
+}
+
+// 更新投组维度表格（保留原函数，用于兼容）
+function updateFXPortfolioTable(details) {
+    // 重定向到新的归因明细表格
+    updateFXAttributionTable(details);
 }
 
 // 更新产品维度饼图和表格
@@ -4445,6 +4976,105 @@ function updateFXCurrencyPairTable(details) {
     });
 }
 
+// 创建归因明细表格行（Tab1：包含总敞口）
+function createFXAttributionTableRow(detail) {
+    const row = document.createElement('tr');
+    
+    // 获取因子映射（处理factors可能是数组或对象的情况）
+    const factorsMap = {};
+    if (Array.isArray(detail.factors)) {
+        detail.factors.forEach(factor => {
+            factorsMap[factor.factor_code] = factor;
+        });
+    } else if (detail.factors && typeof detail.factors === 'object') {
+        Object.values(detail.factors).forEach(factor => {
+            if (factor && factor.factor_code) {
+                factorsMap[factor.factor_code] = factor;
+            }
+        });
+    }
+    
+    // 因子代码映射 - 调整为新的因子列表
+    const factorCodes = ['delta', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna'];
+    
+    const dimensionValue = detail.dimension_value || '';
+    const totalExposure = detail.total_exposure || 0;
+    
+    row.innerHTML = `
+        <td>${dimensionValue}</td>
+        <td class="${getNumberClass(totalExposure)}">${formatNumber(totalExposure)}</td>
+        <td class="${getNumberClass(detail.valuation_pnl)}">${formatNumber(detail.valuation_pnl)}</td>
+        ${factorCodes.map(code => {
+            const factor = factorsMap[code];
+            const value = factor ? factor.pnl_contribution : 0;
+            return `<td class="${getNumberClass(value)}">${formatNumber(value)}</td>`;
+        }).join('')}
+        <td class="${getNumberClass(detail.unexplained)}">${formatNumber(detail.unexplained)}</td>
+        <td>
+            <div style="display: flex; gap: 8px; justify-content: center;">
+                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
+                    查看明细
+                </button>
+                <button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
+                    查看趋势图
+                </button>
+            </div>
+        </td>
+    `;
+    
+    return row;
+}
+
+// 创建敏感值表格行（Tab2：显示敏感值和总敞口、操作列）
+function createFXSensitivityTableRow(detail) {
+    const row = document.createElement('tr');
+    
+    // 获取因子映射（处理factors可能是数组或对象的情况）
+    const factorsMap = {};
+    if (Array.isArray(detail.factors)) {
+        detail.factors.forEach(factor => {
+            factorsMap[factor.factor_code] = factor;
+        });
+    } else if (detail.factors && typeof detail.factors === 'object') {
+        Object.values(detail.factors).forEach(factor => {
+            if (factor && factor.factor_code) {
+                factorsMap[factor.factor_code] = factor;
+            }
+        });
+    }
+    
+    // 因子代码映射 - 调整为新的因子列表
+    const factorCodes = ['delta', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna'];
+    
+    const dimensionValue = detail.dimension_value || '';
+    const totalExposure = detail.total_exposure || 0;
+    
+    row.innerHTML = `
+        <td>${dimensionValue}</td>
+        <td class="${getNumberClass(totalExposure)}">${formatNumber(totalExposure)}</td>
+        ${factorCodes.map(code => {
+            const factor = factorsMap[code];
+            const value = factor ? factor.pnl_contribution : 0;
+            return `<td class="${getNumberClass(value)}">${formatNumber(value)}</td>`;
+        }).join('')}
+        <td>
+            <div style="display: flex; gap: 8px; justify-content: center;">
+                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
+                    交易明细
+                </button>
+                <button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}")'>
+                    贡献度
+                </button>
+            </div>
+        </td>
+    `;
+    
+    // 保存详细数据到行元素，用于贡献度查看
+    row._detailData = detail;
+    
+    return row;
+}
+
 // 创建表格行（通用函数）
 function createFXTableRow(detail, dimensionType) {
     const row = document.createElement('tr');
@@ -4463,9 +5093,8 @@ function createFXTableRow(detail, dimensionType) {
         });
     }
     
-    // 因子代码映射
-    const factorCodes = ['delta', 'vega', 'gamma', 'theta', 'rho', 'vanna', 
-                       'charm', 'veta', 'vomma', 'speed', 'theta_decay'];
+    // 因子代码映射 - 调整为新的因子列表
+    const factorCodes = ['delta', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna'];
     
     const dimensionValue = detail.dimension_value || '';
     
@@ -4479,12 +5108,15 @@ function createFXTableRow(detail, dimensionType) {
         }).join('')}
         <td class="${getNumberClass(detail.unexplained)}">${formatNumber(detail.unexplained)}</td>
         <td>
-            <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")' style="margin-right: 8px;">
-                查看明细
-            </button>
-            <button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>
-                查看趋势图
-            </button>
+            <div style="display: flex; gap: 8px; justify-content: center;">
+                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>
+                    查看明细
+                </button>
+                ${dimensionType === 'currency_pair' 
+                    ? `<button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}", "currency_pair")'>贡献度</button>`
+                    : `<button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>查看趋势图</button>`
+                }
+            </div>
         </td>
     `;
     
@@ -4527,13 +5159,6 @@ function handleFXReset() {
         fxElements.currencyPairSelect.value = '';
     }
     
-    // 重置明细日期选择器
-    if (fxElements.detailDateSelect) {
-        const today = new Date().toISOString().split('T')[0];
-        fxElements.detailDateSelect.value = today;
-        fxElements.detailDateSelect.min = fxElements.startDate ? fxElements.startDate.value : '2025-11-01';
-        fxElements.detailDateSelect.max = today;
-    }
     
     // 清空显示
     if (fxElements.valuationPnl) {
@@ -4644,16 +5269,13 @@ function showFXProductAttribution(productName) {
     // 因子名称映射
     const factorNameMap = {
         'delta': 'Delta',
-        'vega': 'Vega',
         'gamma': 'Gamma',
+        'vega': 'Vega',
         'theta': 'Theta',
         'rho': 'Rho',
-        'vanna': 'Vanna',
-        'charm': 'Charm',
-        'veta': 'Veta',
-        'vomma': 'Vomma',
-        'speed': 'Speed',
-        'theta_decay': 'ThetaDecay'
+        'phi': 'Phi',
+        'volga': 'Volga',
+        'vanna': 'Vanna'
     };
     
     // 创建数据数组
@@ -5302,7 +5924,7 @@ const fxDrilldown = {
         // 显示加载状态
         const tbody = document.getElementById('fxTransactionDetailBody');
         if (tbody) {
-            tbody.innerHTML = '<tr><td colspan="10" class="empty-state">加载中...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="21" class="empty-state">加载中...</td></tr>';
         }
         
         // 从API加载交易明细
@@ -5337,7 +5959,7 @@ const fxDrilldown = {
             console.error('Failed to load transaction details:', error);
             const tbody = document.getElementById('fxTransactionDetailBody');
             if (tbody) {
-                tbody.innerHTML = '<tr><td colspan="10" class="empty-state">加载失败：' + (error.message || '未知错误') + '</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="21" class="empty-state">加载失败：' + (error.message || '未知错误') + '</td></tr>';
             }
         }
     },
@@ -5353,7 +5975,7 @@ const fxDrilldown = {
         
         if (!transactions || transactions.length === 0) {
             const row = document.createElement('tr');
-            row.innerHTML = '<td colspan="10" class="empty-state">暂无交易数据</td>';
+            row.innerHTML = '<td colspan="21" class="empty-state">暂无交易数据</td>';
             tbody.appendChild(row);
             return;
         }
@@ -5364,6 +5986,28 @@ const fxDrilldown = {
             
             // 根据估值损益的值设置颜色
             const pnlClass = txn.valuation_pnl > 0 ? 'positive' : txn.valuation_pnl < 0 ? 'negative' : '';
+            
+            // 敏感性指标列表
+            const sensitivityFields = [
+                { key: 'delta', value: txn.delta || 0 },
+                { key: 'vega', value: txn.vega || 0 },
+                { key: 'gamma', value: txn.gamma || 0 },
+                { key: 'theta', value: txn.theta || 0 },
+                { key: 'rho', value: txn.rho || 0 },
+                { key: 'vanna', value: txn.vanna || 0 },
+                { key: 'charm', value: txn.charm || 0 },
+                { key: 'veta', value: txn.veta || 0 },
+                { key: 'vomma', value: txn.vomma || 0 },
+                { key: 'speed', value: txn.speed || 0 },
+                { key: 'theta_decay', value: txn.theta_decay || 0 }
+            ];
+            
+            // 生成敏感性指标单元格
+            const sensitivityCells = sensitivityFields.map(field => {
+                const value = field.value || 0;
+                const cellClass = this.getNumberClass(value);
+                return `<td class="text-right ${cellClass}">${this.formatNumber(value)}</td>`;
+            }).join('');
             
             row.innerHTML = `
                 <td>${txn.transaction_id}</td>
@@ -5376,6 +6020,7 @@ const fxDrilldown = {
                 <td class="text-right">${this.formatNumber(txn.price, 4)}</td>
                 <td class="text-right ${pnlClass}">${this.formatNumber(txn.valuation_pnl)}</td>
                 <td>${txn.portfolio_name}</td>
+                ${sensitivityCells}
             `;
             tbody.appendChild(row);
         });
@@ -5413,6 +6058,15 @@ const fxDrilldown = {
             minimumFractionDigits: decimals,
             maximumFractionDigits: decimals
         });
+    },
+
+    /**
+     * 获取数字样式类
+     */
+    getNumberClass(value) {
+        if (value > 0) return 'positive';
+        if (value < 0) return 'negative';
+        return '';
     }
 };
 
