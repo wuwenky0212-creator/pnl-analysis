@@ -100,9 +100,9 @@ const fxContribution = {
     },
 
     /**
-     * 加载贡献度数据（投组）
+     * 加载贡献度数据（投组/账户）
      */
-    loadContributionData(portfolioName) {
+    loadContributionData(dimensionValue) {
         try {
             // 从全局状态中获取portfolio数据
             const portfolioData = window.fxState?.fxData?.portfolio;
@@ -110,19 +110,23 @@ const fxContribution = {
                 throw new Error('暂无数据');
             }
             
-            // 查找该投组的数据（可能需要汇总）
+            // 查找该维度值的数据（可能需要汇总）
             let portfolioDetail = null;
             const matchingDetails = [];
             
             portfolioData.details.forEach(detail => {
-                const mappedName = mapFXPortfolioName(detail.dimension_value);
-                if (mappedName === portfolioName) {
+                // 尝试投组名称映射
+                const mappedPortfolioName = window.mapFXPortfolioName ? window.mapFXPortfolioName(detail.dimension_value) : detail.dimension_value;
+                // 尝试账户名称映射
+                const mappedAccountName = window.mapFXAccountName ? window.mapFXAccountName(detail.dimension_value) : detail.dimension_value;
+                
+                if (mappedPortfolioName === dimensionValue || mappedAccountName === dimensionValue || detail.dimension_value === dimensionValue) {
                     matchingDetails.push(detail);
                 }
             });
             
             if (matchingDetails.length === 0) {
-                throw new Error('未找到该投组的数据');
+                throw new Error('未找到该维度的数据');
             }
             
             // 如果有多条数据，需要汇总
@@ -131,7 +135,7 @@ const fxContribution = {
             } else {
                 // 汇总多条数据
                 portfolioDetail = {
-                    dimension_value: portfolioName,
+                    dimension_value: dimensionValue,
                     valuation_pnl: 0,
                     factors: {},
                     unexplained: 0
@@ -155,7 +159,7 @@ const fxContribution = {
             }
             
             // 更新贡献度显示
-            this.updateContributionDisplay(portfolioDetail, portfolioName, '投组');
+            this.updateContributionDisplay(portfolioDetail, dimensionValue, '维度');
             
         } catch (error) {
             console.error('Failed to load contribution data:', error);
@@ -244,12 +248,12 @@ const fxContribution = {
                     <!-- 右侧：表格 -->
                     <div style="flex: 1; min-width: 300px;">
                         <div class="table-container">
-                            <table style="width: 100%; border-collapse: collapse;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                                 <thead>
                                     <tr style="background-color: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
-                                        <th style="padding: 12px; text-align: left; font-weight: 600; color: var(--text-primary);">归因因子</th>
-                                        <th style="padding: 12px; text-align: right; font-weight: 600; color: var(--text-primary);">贡献度（万元）</th>
-                                        <th style="padding: 12px; text-align: right; font-weight: 600; color: var(--text-primary);">占比</th>
+                                        <th style="padding: 8px 10px; text-align: left; font-weight: 600; color: var(--text-primary); font-size: 12px;">归因因子</th>
+                                        <th style="padding: 8px 10px; text-align: right; font-weight: 600; color: var(--text-primary); font-size: 12px;">贡献度（万元）</th>
+                                        <th style="padding: 8px 10px; text-align: right; font-weight: 600; color: var(--text-primary); font-size: 12px;">占比</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -261,9 +265,9 @@ const fxContribution = {
             
             html += `
                 <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 10px;">${item.name}</td>
-                    <td style="padding: 10px; text-align: right; ${valueClass}">${this.formatNumber(actualValue)}</td>
-                    <td style="padding: 10px; text-align: right;">${item.percentage.toFixed(2)}%</td>
+                    <td style="padding: 6px 10px; font-size: 12px;">${item.name}</td>
+                    <td style="padding: 6px 10px; text-align: right; font-size: 12px; ${valueClass}">${this.formatNumber(actualValue)}</td>
+                    <td style="padding: 6px 10px; text-align: right; font-size: 12px;">${item.percentage.toFixed(2)}%</td>
                 </tr>
             `;
         });
@@ -368,16 +372,14 @@ const fxContribution = {
     getFactorDisplayName(factorCode) {
         const nameMap = {
             'delta': 'Delta',
-            'vega': 'Vega',
+            'pv01': 'PV01',
             'gamma': 'Gamma',
+            'vega': 'Vega',
             'theta': 'Theta',
             'rho': 'Rho',
-            'vanna': 'Vanna',
-            'charm': 'Charm',
-            'veta': 'Veta',
-            'vomma': 'Vomma',
-            'speed': 'Speed',
-            'theta_decay': 'ThetaDecay'
+            'phi': 'Phi',
+            'volga': 'Volga',
+            'vanna': 'Vanna'
         };
         return nameMap[factorCode] || factorCode;
     },

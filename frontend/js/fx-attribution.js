@@ -1170,6 +1170,7 @@ function showFXProductAttribution(productName) {
     // 因子名称映射
     const factorNameMap = {
         'delta': 'Delta',
+        'pv01': 'PV01',
         'gamma': 'Gamma',
         'vega': 'Vega',
         'theta': 'Theta',
@@ -1241,6 +1242,8 @@ function bindProductAttributionModalEvents() {
 window.fxState = fxState;
 window.fxElements = fxElements;
 window.showFXProductAttribution = showFXProductAttribution;
+window.mapFXAccountName = mapFXAccountName;
+window.mapFXPortfolioName = mapFXPortfolioName;
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {

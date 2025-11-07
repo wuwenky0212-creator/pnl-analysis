@@ -829,8 +829,8 @@ tbody tr:hover {
 .empty-state {
     text-align: center;
     color: var(--text-tertiary);
-    padding: 60px;
-    font-size: 14px;
+    padding: 30px;
+    font-size: 12px;
     font-weight: 400;
 }
 
