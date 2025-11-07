@@ -905,8 +905,8 @@ function createFXAttributionTableRow(detail) {
         <td class="${getNumberClass(detail.unexplained)}">${formatNumber(detail.unexplained)}</td>
         <td>
             <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: nowrap;">
-                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
-                    查看明细
+                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showFactorDetails("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio", "${currencyPair}", "${startDate}", "${endDate}")'>
+                    查看因子
                 </button>
                 <button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
                     趋势图
@@ -955,8 +955,8 @@ function createFXSensitivityTableRow(detail) {
         }).join('')}
         <td>
             <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: nowrap;">
-                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
-                    查看明细
+                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showFactorDetails("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio", "USDCNY", "", "")'>
+                    查看因子
                 </button>
                 <button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
                     趋势图
@@ -1008,8 +1008,8 @@ function createFXTableRow(detail, dimensionType) {
         <td class="${getNumberClass(detail.unexplained)}">${formatNumber(detail.unexplained)}</td>
         <td>
             <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: nowrap;">
-                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>
-                    查看明细
+                <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showFactorDetails("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}", "${dimensionValue}", "", "")'>
+                    查看因子
                 </button>
                 <button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>
                     趋势图

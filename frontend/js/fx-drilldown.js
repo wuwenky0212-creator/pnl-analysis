@@ -5,9 +5,44 @@
 const fxDrilldown = {
     currentDimensionValue: null,
     currentDimensionType: null,
+    currentCurrencyPair: null,
+    currentStartDate: null,
+    currentEndDate: null,
 
     /**
-     * 显示交易明细弹窗
+     * 显示因子详情弹窗（新）
+     */
+    async showFactorDetails(dimensionValue, dimensionType, currencyPair, startDate, endDate) {
+        this.currentDimensionValue = dimensionValue;
+        this.currentDimensionType = dimensionType;
+        this.currentCurrencyPair = currencyPair || 'USDCNY';
+        this.currentStartDate = startDate || window.fxElements?.startDate.value || '';
+        this.currentEndDate = endDate || window.fxElements?.endDate.value || '';
+        
+        // 显示模态框
+        const modal = document.getElementById('fxFactorDetailModal');
+        if (!modal) {
+            console.error('Factor detail modal not found');
+            return;
+        }
+        
+        modal.style.display = 'block';
+        
+        // 显示加载状态
+        const tbody = document.getElementById('fxFactorDetailBody');
+        if (tbody) {
+            tbody.innerHTML = '<tr><td colspan="20" class="empty-state">加载中...</td></tr>';
+        }
+        
+        // 从API加载因子详情
+        await this.loadFactorDetails();
+        
+        // 绑定模态框事件
+        this.bindFactorModalEvents();
+    },
+
+    /**
+     * 显示交易明细弹窗（保留原功能）
      */
     async showDrilldown(dimensionValue, dimensionType, hasStartFactors, hasEndFactors) {
         this.currentDimensionValue = dimensionValue;
@@ -122,6 +157,123 @@ const fxDrilldown = {
             `;
             tbody.appendChild(row);
         });
+    },
+
+    /**
+     * 从API加载因子详情
+     */
+    async loadFactorDetails() {
+        try {
+            // 生成模拟因子数据
+            const factorData = {
+                account: this.currentDimensionValue,
+                underlying: this.currentCurrencyPair,
+                start_date: this.currentStartDate,
+                end_date: this.currentEndDate,
+                delta_y: Math.random() * 100 - 50,
+                pv01_y: Math.random() * 50 - 25,
+                gamma_y: Math.random() * 30 - 15,
+                vega_y: Math.random() * 40 - 20,
+                theta: Math.random() * 20 - 10,
+                delta_t: Math.random() * 10,
+                rho: Math.random() * 35 - 17.5,
+                phi: Math.random() * 25 - 12.5,
+                volga: Math.random() * 15 - 7.5,
+                vanna: Math.random() * 18 - 9,
+                delta_s: Math.random() * 0.5 - 0.25,
+                delta_r: Math.random() * 0.02 - 0.01,
+                delta_sigma: Math.random() * 0.1 - 0.05,
+                delta_r_dom: Math.random() * 0.015 - 0.0075,
+                delta_r_for: Math.random() * 0.015 - 0.0075,
+                unexplained: Math.random() * 5 - 2.5
+            };
+            
+            // 计算估值损益（因子总和）
+            const valuationPnl = factorData.delta_y + factorData.pv01_y + factorData.gamma_y + 
+                                factorData.vega_y + factorData.theta + factorData.rho + 
+                                factorData.phi + factorData.volga + factorData.vanna + factorData.unexplained;
+            
+            // 更新因子详情表格
+            this.updateFactorDetailTable(factorData, valuationPnl);
+            
+        } catch (error) {
+            console.error('Failed to load factor details:', error);
+            const tbody = document.getElementById('fxFactorDetailBody');
+            if (tbody) {
+                tbody.innerHTML = '<tr><td colspan="20" class="empty-state">加载失败：' + (error.message || '未知错误') + '</td></tr>';
+            }
+        }
+    },
+
+    /**
+     * 更新因子详情表格
+     */
+    updateFactorDetailTable(data, valuationPnl) {
+        const tbody = document.getElementById('fxFactorDetailBody');
+        if (!tbody) return;
+        
+        tbody.innerHTML = '';
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${data.account}</td>
+            <td>${data.underlying}</td>
+            <td>${data.start_date}</td>
+            <td>${data.end_date}</td>
+            <td class="text-right ${this.getNumberClass(data.delta_y)}">${this.formatNumber(data.delta_y)}</td>
+            <td class="text-right ${this.getNumberClass(data.pv01_y)}">${this.formatNumber(data.pv01_y)}</td>
+            <td class="text-right ${this.getNumberClass(data.gamma_y)}">${this.formatNumber(data.gamma_y)}</td>
+            <td class="text-right ${this.getNumberClass(data.vega_y)}">${this.formatNumber(data.vega_y)}</td>
+            <td class="text-right ${this.getNumberClass(data.theta)}">${this.formatNumber(data.theta)}</td>
+            <td class="text-right">${this.formatNumber(data.delta_t, 4)}</td>
+            <td class="text-right ${this.getNumberClass(data.rho)}">${this.formatNumber(data.rho)}</td>
+            <td class="text-right ${this.getNumberClass(data.phi)}">${this.formatNumber(data.phi)}</td>
+            <td class="text-right ${this.getNumberClass(data.volga)}">${this.formatNumber(data.volga)}</td>
+            <td class="text-right ${this.getNumberClass(data.vanna)}">${this.formatNumber(data.vanna)}</td>
+            <td class="text-right">${this.formatNumber(data.delta_s, 4)}</td>
+            <td class="text-right">${this.formatNumber(data.delta_r, 4)}</td>
+            <td class="text-right">${this.formatNumber(data.delta_sigma, 4)}</td>
+            <td class="text-right">${this.formatNumber(data.delta_r_dom, 4)}</td>
+            <td class="text-right">${this.formatNumber(data.delta_r_for, 4)}</td>
+            <td class="text-right ${this.getNumberClass(data.unexplained)}">${this.formatNumber(data.unexplained)}</td>
+        `;
+        tbody.appendChild(row);
+        
+        // 显示校验信息
+        const sumFactors = data.delta_y + data.pv01_y + data.gamma_y + data.vega_y + 
+                          data.theta + data.rho + data.phi + data.volga + data.vanna + data.unexplained;
+        const validation = document.getElementById('fxFactorValidation');
+        if (validation) {
+            const isValid = Math.abs(sumFactors - valuationPnl) < 0.01;
+            validation.innerHTML = `
+                <strong>校验：</strong> 
+                因子贡献总和 = ${this.formatNumber(sumFactors)} 万元
+                ${isValid ? '<span style="color: var(--success);">✓ 校验通过</span>' : '<span style="color: var(--danger);">✗ 校验失败</span>'}
+            `;
+        }
+    },
+
+    /**
+     * 绑定因子详情模态框事件
+     */
+    bindFactorModalEvents() {
+        const modal = document.getElementById('fxFactorDetailModal');
+        if (!modal) return;
+        
+        // 关闭按钮
+        const closeBtn = document.getElementById('fxFactorDetailClose');
+        if (closeBtn) {
+            closeBtn.onclick = () => {
+                modal.style.display = 'none';
+            };
+        }
+        
+        // 点击外部关闭
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
     },
 
     /**

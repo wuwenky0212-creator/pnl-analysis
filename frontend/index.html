@@ -461,6 +461,54 @@
         </main>
     </div>
 
+    <!-- 因子详情弹窗 -->
+    <div id="fxFactorDetailModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 1600px;">
+            <div class="modal-header">
+                <h3 class="modal-title">因子详情</h3>
+                <span class="modal-close" id="fxFactorDetailClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="fxFactorValidation" style="padding: 12px; background: #f5f5f5; border-radius: 4px; margin-bottom: 16px;">
+                    <strong>校验：</strong> 加载中...
+                </div>
+                <div class="table-container" style="max-height: 600px; overflow-y: auto;">
+                    <table id="fxFactorDetailTable">
+                        <thead>
+                            <tr>
+                                <th>账户</th>
+                                <th>标的</th>
+                                <th>起始日期</th>
+                                <th>结束日期</th>
+                                <th>Delta_y</th>
+                                <th>PV01_y</th>
+                                <th>Gamma_y</th>
+                                <th>Vega_y</th>
+                                <th>Theta</th>
+                                <th>Δt</th>
+                                <th>Rho</th>
+                                <th>Phi</th>
+                                <th>Volga</th>
+                                <th>Vanna</th>
+                                <th>ΔS</th>
+                                <th>Δr</th>
+                                <th>Δσ</th>
+                                <th>Δr_dom</th>
+                                <th>Δr_for</th>
+                                <th>无法解释部分</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fxFactorDetailBody">
+                            <tr>
+                                <td colspan="20" class="empty-state">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 交易明细弹窗 -->
     <div id="fxDrilldownModal" class="modal" style="display: none;">
         <div class="modal-content" style="max-width: 1400px;">
