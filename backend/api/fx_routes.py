@@ -88,18 +88,15 @@ class FXTransactionDetail(BaseModel):
     price: float
     valuation_pnl: float
     portfolio_name: str
-    # 敏感性指标
+    # 敏感性指标 - 更新为新的8个因子
     delta: float = 0.0
-    vega: float = 0.0
     gamma: float = 0.0
+    vega: float = 0.0
     theta: float = 0.0
     rho: float = 0.0
+    phi: float = 0.0
+    volga: float = 0.0
     vanna: float = 0.0
-    charm: float = 0.0
-    veta: float = 0.0
-    vomma: float = 0.0
-    speed: float = 0.0
-    theta_decay: float = 0.0
 
 class FXTransactionDetailRequest(BaseModel):
     """交易明细查询请求"""
@@ -461,18 +458,15 @@ async def get_fx_transaction_details(request: FXTransactionDetailRequest):
             # 投组名称
             portfolio_name = request.dimension_value if request.dimension_type == 'portfolio' else '全机构'
             
-            # 生成敏感性指标（模拟数据）
+            # 生成敏感性指标（模拟数据）- 更新为新的8个因子
             delta = random.uniform(-1000, 1000)
-            vega = random.uniform(-500, 500)
             gamma = random.uniform(-200, 200)
+            vega = random.uniform(-500, 500)
             theta = random.uniform(-100, 100)
             rho = random.uniform(-300, 300)
+            phi = random.uniform(-150, 150)
+            volga = random.uniform(-80, 80)
             vanna = random.uniform(-50, 50)
-            charm = random.uniform(-30, 30)
-            veta = random.uniform(-20, 20)
-            vomma = random.uniform(-10, 10)
-            speed = random.uniform(-5, 5)
-            theta_decay = random.uniform(-40, 40)
             
             transactions.append(FXTransactionDetail(
                 transaction_id=f"TXN{str(i+1).zfill(8)}",
@@ -486,16 +480,13 @@ async def get_fx_transaction_details(request: FXTransactionDetailRequest):
                 valuation_pnl=round(valuation_pnl, 2),
                 portfolio_name=portfolio_name,
                 delta=round(delta, 2),
-                vega=round(vega, 2),
                 gamma=round(gamma, 2),
+                vega=round(vega, 2),
                 theta=round(theta, 2),
                 rho=round(rho, 2),
-                vanna=round(vanna, 2),
-                charm=round(charm, 2),
-                veta=round(veta, 2),
-                vomma=round(vomma, 2),
-                speed=round(speed, 2),
-                theta_decay=round(theta_decay, 2)
+                phi=round(phi, 2),
+                volga=round(volga, 2),
+                vanna=round(vanna, 2)
             ))
         
         # 按交易日期排序

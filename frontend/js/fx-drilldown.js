@@ -25,7 +25,7 @@ const fxDrilldown = {
         // 显示加载状态
         const tbody = document.getElementById('fxTransactionDetailBody');
         if (tbody) {
-            tbody.innerHTML = '<tr><td colspan="21" class="empty-state">加载中...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="18" class="empty-state">加载中...</td></tr>';
         }
         
         // 从API加载交易明细
@@ -60,7 +60,7 @@ const fxDrilldown = {
             console.error('Failed to load transaction details:', error);
             const tbody = document.getElementById('fxTransactionDetailBody');
             if (tbody) {
-                tbody.innerHTML = '<tr><td colspan="21" class="empty-state">加载失败：' + (error.message || '未知错误') + '</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="18" class="empty-state">加载失败：' + (error.message || '未知错误') + '</td></tr>';
             }
         }
     },
@@ -76,7 +76,7 @@ const fxDrilldown = {
         
         if (!transactions || transactions.length === 0) {
             const row = document.createElement('tr');
-            row.innerHTML = '<td colspan="21" class="empty-state">暂无交易数据</td>';
+            row.innerHTML = '<td colspan="18" class="empty-state">暂无交易数据</td>';
             tbody.appendChild(row);
             return;
         }
@@ -88,19 +88,16 @@ const fxDrilldown = {
             // 根据估值损益的值设置颜色
             const pnlClass = txn.valuation_pnl > 0 ? 'positive' : txn.valuation_pnl < 0 ? 'negative' : '';
             
-            // 敏感性指标列表
+            // 敏感性指标列表 - 更新为新的8个因子
             const sensitivityFields = [
                 { key: 'delta', value: txn.delta || 0 },
-                { key: 'vega', value: txn.vega || 0 },
                 { key: 'gamma', value: txn.gamma || 0 },
+                { key: 'vega', value: txn.vega || 0 },
                 { key: 'theta', value: txn.theta || 0 },
                 { key: 'rho', value: txn.rho || 0 },
-                { key: 'vanna', value: txn.vanna || 0 },
-                { key: 'charm', value: txn.charm || 0 },
-                { key: 'veta', value: txn.veta || 0 },
-                { key: 'vomma', value: txn.vomma || 0 },
-                { key: 'speed', value: txn.speed || 0 },
-                { key: 'theta_decay', value: txn.theta_decay || 0 }
+                { key: 'phi', value: txn.phi || 0 },
+                { key: 'volga', value: txn.volga || 0 },
+                { key: 'vanna', value: txn.vanna || 0 }
             ];
             
             // 生成敏感性指标单元格

@@ -899,12 +899,15 @@ function createFXAttributionTableRow(detail) {
         }).join('')}
         <td class="${getNumberClass(detail.unexplained)}">${formatNumber(detail.unexplained)}</td>
         <td>
-            <div style="display: flex; gap: 8px; justify-content: center;">
+            <div style="display: flex; gap: 6px; justify-content: center;">
                 <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
                     查看明细
                 </button>
                 <button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
-                    查看趋势图
+                    趋势图
+                </button>
+                <button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
+                    贡献度
                 </button>
             </div>
         </td>
@@ -946,11 +949,14 @@ function createFXSensitivityTableRow(detail) {
             return `<td class="${getNumberClass(value)}">${formatNumber(value)}</td>`;
         }).join('')}
         <td>
-            <div style="display: flex; gap: 8px; justify-content: center;">
+            <div style="display: flex; gap: 6px; justify-content: center;">
                 <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
-                    交易明细
+                    查看明细
                 </button>
-                <button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}")'>
+                <button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
+                    趋势图
+                </button>
+                <button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}", "portfolio")'>
                     贡献度
                 </button>
             </div>
@@ -996,14 +1002,16 @@ function createFXTableRow(detail, dimensionType) {
         }).join('')}
         <td class="${getNumberClass(detail.unexplained)}">${formatNumber(detail.unexplained)}</td>
         <td>
-            <div style="display: flex; gap: 8px; justify-content: center;">
+            <div style="display: flex; gap: 6px; justify-content: center;">
                 <button class="btn btn-small btn-secondary" onclick='fxDrilldown.showDrilldown("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>
                     查看明细
                 </button>
-                ${dimensionType === 'currency_pair' 
-                    ? `<button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}", "currency_pair")'>贡献度</button>`
-                    : `<button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>查看趋势图</button>`
-                }
+                <button class="btn btn-small btn-primary" onclick='fxTrendChart.showTrendChart("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>
+                    趋势图
+                </button>
+                <button class="btn btn-small btn-primary" onclick='fxContribution.showContribution("${dimensionValue.replace(/"/g, '&quot;')}", "${dimensionType}")'>
+                    贡献度
+                </button>
             </div>
         </td>
     `;
