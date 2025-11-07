@@ -260,3 +260,4 @@ P&L = Capital Gain + Present Value Effect + Revenue + Amortization P&L + Financi
 
 
 
+
