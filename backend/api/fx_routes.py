@@ -44,6 +44,10 @@ class FXAttributionDetail(BaseModel):
     unexplained: float = 0.0
     start_date_factors: Optional[dict] = None
     end_date_factors: Optional[dict] = None
+    # 新增字段
+    currency_pair: Optional[str] = None  # 资产标的
+    start_date: Optional[str] = None  # 起始日期
+    end_date: Optional[str] = None  # 结束日期
 
 class FXAttributionRequest(BaseModel):
     """外汇类损益归因分析请求"""
@@ -191,10 +195,11 @@ async def calculate_fx_attribution(request: FXAttributionRequest):
                 valuation_pnl = random.uniform(-100, 100)
                 total_pnl += valuation_pnl
                 
-                # 生成8个因子
+                # 生成9个因子（新增PV01）
                 factors = []
                 factor_names = [
                     ("delta", "Delta"),
+                    ("pv01", "PV01"),
                     ("gamma", "Gamma"),
                     ("vega", "Vega"),
                     ("theta", "Theta"),
@@ -223,13 +228,20 @@ async def calculate_fx_attribution(request: FXAttributionRequest):
                 start_factors = {code: random.uniform(0, 1) for code, _ in factor_names}
                 end_factors = {code: random.uniform(0, 1) for code, _ in factor_names}
                 
+                # 随机选择货币对
+                currency_pairs = ["USDCNY", "EURCNY", "GBPCNY", "JPYCNY", "HKDCNY"]
+                currency_pair = random.choice(currency_pairs)
+                
                 details.append(FXAttributionDetail(
                     dimension_value=folder_name,
                     valuation_pnl=valuation_pnl,
                     factors=factors,
                     unexplained=unexplained,
                     start_date_factors=start_factors,
-                    end_date_factors=end_factors
+                    end_date_factors=end_factors,
+                    currency_pair=currency_pair,
+                    start_date=request.start_date,
+                    end_date=request.end_date
                 ))
         
         elif request.group_by == "product":
@@ -241,7 +253,7 @@ async def calculate_fx_attribution(request: FXAttributionRequest):
                 
                 factors = []
                 factor_names = [
-                    ("delta", "Delta"), ("gamma", "Gamma"), ("vega", "Vega"),
+                    ("delta", "Delta"), ("pv01", "PV01"), ("gamma", "Gamma"), ("vega", "Vega"),
                     ("theta", "Theta"), ("rho", "Rho"), ("phi", "Phi"),
                     ("volga", "Volga"), ("vanna", "Vanna")
                 ]
@@ -263,13 +275,20 @@ async def calculate_fx_attribution(request: FXAttributionRequest):
                 start_factors = {code_f: random.uniform(0, 1) for code_f, _ in factor_names}
                 end_factors = {code_f: random.uniform(0, 1) for code_f, _ in factor_names}
                 
+                # 随机选择货币对
+                currency_pairs_list = ["USDCNY", "EURCNY", "GBPCNY", "JPYCNY", "HKDCNY"]
+                currency_pair = random.choice(currency_pairs_list)
+                
                 details.append(FXAttributionDetail(
                     dimension_value=code,
                     valuation_pnl=valuation_pnl,
                     factors=factors,
                     unexplained=unexplained,
                     start_date_factors=start_factors,
-                    end_date_factors=end_factors
+                    end_date_factors=end_factors,
+                    currency_pair=currency_pair,
+                    start_date=request.start_date,
+                    end_date=request.end_date
                 ))
         
         else:  # currency_pair
@@ -282,7 +301,7 @@ async def calculate_fx_attribution(request: FXAttributionRequest):
                 
                 factors = []
                 factor_names = [
-                    ("delta", "Delta"), ("gamma", "Gamma"), ("vega", "Vega"),
+                    ("delta", "Delta"), ("pv01", "PV01"), ("gamma", "Gamma"), ("vega", "Vega"),
                     ("theta", "Theta"), ("rho", "Rho"), ("phi", "Phi"),
                     ("volga", "Volga"), ("vanna", "Vanna")
                 ]
@@ -310,7 +329,10 @@ async def calculate_fx_attribution(request: FXAttributionRequest):
                     factors=factors,
                     unexplained=unexplained,
                     start_date_factors=start_factors,
-                    end_date_factors=end_factors
+                    end_date_factors=end_factors,
+                    currency_pair=pair,
+                    start_date=request.start_date,
+                    end_date=request.end_date
                 ))
         
         # 生成趋势数据
@@ -388,7 +410,7 @@ async def get_fx_drilldown(request: FXDrilldownRequest):
         import random
         
         factor_names = [
-            "delta", "gamma", "vega", "theta", "rho", "phi", "volga", "vanna"
+            "delta", "pv01", "gamma", "vega", "theta", "rho", "phi", "volga", "vanna"
         ]
         
         start_factors = {code: random.uniform(0, 1) for code in factor_names}
@@ -517,7 +539,7 @@ async def get_fx_factor_trend(request: FXFactorTrendRequest):
         from datetime import datetime, timedelta
         
         # 因子代码列表
-        factor_codes = ['delta', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna']
+        factor_codes = ['delta', 'pv01', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna']
         
         trend_data = []
         start = datetime.strptime(request.start_date, "%Y-%m-%d")

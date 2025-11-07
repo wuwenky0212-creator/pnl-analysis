@@ -422,7 +422,10 @@ function updateFXAttributionTable(details) {
                 unexplained: 0,
                 total_exposure: 0, // 总敞口
                 start_date_factors: detail.start_date_factors,
-                end_date_factors: detail.end_date_factors
+                end_date_factors: detail.end_date_factors,
+                currency_pair: detail.currency_pair || 'USDCNY', // 资产标的
+                start_date: detail.start_date || '', // 起始日期
+                end_date: detail.end_date || '' // 结束日期
             });
         }
         
@@ -854,7 +857,7 @@ function updateFXCurrencyPairTable(details) {
     });
 }
 
-// 创建归因明细表格行（Tab1：包含总敞口）
+// 创建归因明细表格行（Tab1：新格式 - 账户、资产标的、日期、因子PL和%）
 function createFXAttributionTableRow(detail) {
     const row = document.createElement('tr');
     
@@ -872,21 +875,33 @@ function createFXAttributionTableRow(detail) {
         });
     }
     
-    // 因子代码映射 - 调整为新的因子列表
-    const factorCodes = ['delta', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna'];
+    // 因子代码映射 - 新增PV01
+    const factorCodes = ['delta', 'pv01', 'gamma', 'vega', 'theta', 'rho', 'phi', 'volga', 'vanna'];
     
     const dimensionValue = detail.dimension_value || '';
-    const totalExposure = detail.total_exposure || 0;
+    const currencyPair = detail.currency_pair || 'USDCNY';
+    const startDate = detail.start_date || '';
+    const endDate = detail.end_date || '';
+    const valuationPnl = detail.valuation_pnl || 0;
+    
+    // 生成每个因子的PL和%列
+    const factorCells = factorCodes.map(code => {
+        const factor = factorsMap[code];
+        const pl = factor ? factor.pnl_contribution : 0;
+        const percentage = valuationPnl !== 0 ? ((pl / valuationPnl) * 100).toFixed(1) : '0.0';
+        
+        return `
+            <td class="${getNumberClass(pl)}">${formatNumber(pl)}</td>
+            <td class="text-right">${percentage}%</td>
+        `;
+    }).join('');
     
     row.innerHTML = `
         <td>${dimensionValue}</td>
-        <td class="${getNumberClass(totalExposure)}">${formatNumber(totalExposure)}</td>
-        <td class="${getNumberClass(detail.valuation_pnl)}">${formatNumber(detail.valuation_pnl)}</td>
-        ${factorCodes.map(code => {
-            const factor = factorsMap[code];
-            const value = factor ? factor.pnl_contribution : 0;
-            return `<td class="${getNumberClass(value)}">${formatNumber(value)}</td>`;
-        }).join('')}
+        <td>${currencyPair}</td>
+        <td>${startDate}</td>
+        <td>${endDate}</td>
+        ${factorCells}
         <td class="${getNumberClass(detail.unexplained)}">${formatNumber(detail.unexplained)}</td>
         <td>
             <div style="display: flex; gap: 6px; justify-content: center;">
