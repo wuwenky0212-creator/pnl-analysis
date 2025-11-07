@@ -786,6 +786,8 @@ body {
 
 .table-container {
     overflow-x: auto;
+    padding: 0;
+    margin: 0;
 }
 
 table {
@@ -1045,7 +1047,7 @@ tbody tr:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 24px;
+    padding: 16px;
     border-bottom: 1px solid var(--border-color);
     background: #ffffff;
 }
@@ -1079,7 +1081,7 @@ tbody tr:hover {
 }
 
 .modal-body {
-    padding: 24px;
+    padding: 16px;
     background: #ffffff;
 }
 
@@ -1087,18 +1089,18 @@ tbody tr:hover {
 .tab-nav {
     display: flex;
     gap: 0;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     border-bottom: 2px solid var(--border-color);
 }
 
 .tab-button {
-    padding: 12px 24px;
+    padding: 8px 16px;
     background: transparent;
     border: none;
     border-bottom: 3px solid transparent;
     color: var(--text-tertiary);
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     transition: all 0.3s ease;
     margin-bottom: -2px;
@@ -1120,6 +1122,8 @@ tbody tr:hover {
 .tab-content {
     display: none;
     animation: fadeIn 0.3s ease;
+    padding: 0;
+    margin-top: 8px;
 }
 
 .tab-content.active {
